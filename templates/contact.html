@@ -3,47 +3,59 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact Us – Logistiqoroyal</title>
+  <title>Contact – NexaTrack</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    * { font-family: 'Inter', sans-serif; }
+    .glass { background: rgba(255,255,255,0.04); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+    .glass-input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; }
+    .glass-input:focus { outline: none; border-color: rgba(6,182,212,0.5); box-shadow: 0 0 0 3px rgba(6,182,212,0.1); }
+    .glass-input::placeholder { color: #475569; }
+    .gradient-text { background: linear-gradient(135deg, #22d3ee, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .glow { box-shadow: 0 0 40px rgba(6,182,212,0.15); }
+    .glow-btn { box-shadow: 0 0 20px rgba(6,182,212,0.4); }
+    .hero-bg { background: radial-gradient(ellipse at 20% 50%, rgba(6,182,212,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(139,92,246,0.08) 0%, transparent 60%), #020817; }
+    .grid-bg { background-image: linear-gradient(rgba(6,182,212,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(6,182,212,0.03) 1px, transparent 1px); background-size: 60px 60px; }
+    select option { background: #0f172a; color: white; }
+  </style>
 </head>
-<body class="bg-white text-slate-800">
+<body class="bg-[#020817] text-white">
 
   <!-- Navbar -->
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-100 shadow-sm">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-2.5">
-        <div class="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center shadow">
+  <header class="fixed top-0 w-full z-50 glass border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center glow">
           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M20 7l-8-4-8 4m16 0v10l-8 4m0-14L4 17m8 4V11"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0v10l-8 4m0-14L4 17m8 4V11"/>
           </svg>
         </div>
-        <span class="text-xl font-bold text-slate-900">Logistiqoroyal</span>
+        <span class="text-xl font-bold tracking-tight">Nexa<span class="text-cyan-400">Track</span></span>
       </a>
-      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-        <a href="/track" class="hover:text-blue-600 transition">Track Shipment</a>
-        <a href="/about" class="hover:text-blue-600 transition">About Us</a>
-        <a href="/privacy" class="hover:text-blue-600 transition">Privacy Policy</a>
-        <a href="/login" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded-lg transition font-semibold">Login</a>
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+        <a href="/track" class="hover:text-cyan-400 transition">Track</a>
+        <a href="/about" class="hover:text-cyan-400 transition">About</a>
+        <a href="/contact" class="text-cyan-400 font-semibold">Contact</a>
+        <a href="/privacy" class="hover:text-cyan-400 transition">Privacy</a>
       </nav>
+      <a href="/login" class="text-sm font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white px-5 py-2 rounded-xl transition glow-btn">
+        Sign In →
+      </a>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="relative bg-gradient-to-br from-slate-900 to-blue-950 text-white py-20 overflow-hidden">
-    <div class="absolute inset-0 opacity-10"
-      style="background-image: linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px),
-             linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px);
-             background-size: 40px 40px;">
-    </div>
-    <div class="relative max-w-4xl mx-auto px-6 text-center">
-      <div class="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 uppercase tracking-wide">
-        📬 Get In Touch
+  <section class="hero-bg grid-bg pt-32 pb-20 text-center px-6">
+    <div class="max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 glass text-cyan-400 text-xs font-semibold px-4 py-2 rounded-full mb-8 border border-cyan-500/20">
+        <span class="w-2 h-2 bg-cyan-400 rounded-full"></span>
+        Get In Touch
       </div>
-      <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Contact Logistiqoroyal</h1>
-      <p class="text-slate-300 text-lg max-w-xl mx-auto">
-        Have a question about your shipment or our services? Our team is ready to help.
-      </p>
+      <h1 class="text-5xl md:text-6xl font-black tracking-tight mb-6">
+        Contact <span class="gradient-text">NexaTrack</span>
+      </h1>
+      <p class="text-slate-400 text-lg">Have a question about your shipment or our services? Our team is ready to help.</p>
     </div>
   </section>
 
@@ -52,107 +64,91 @@
     <div class="max-w-6xl mx-auto px-6">
       <div class="grid md:grid-cols-5 gap-12">
 
-        <!-- Left: info cards -->
+        <!-- Left info -->
         <div class="md:col-span-2 space-y-6">
-
           <div>
-            <h2 class="text-2xl font-bold text-slate-900 mb-2">We'd love to hear from you</h2>
-            <p class="text-slate-500 text-sm leading-relaxed">
-              Whether you have a question about a shipment, need help with your account, or want to learn more about our services — fill in the form and we'll get back to you within 24 hours.
+            <h2 class="text-2xl font-bold mb-3">We'd love to hear from you</h2>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              Whether you have a question about a shipment, need help with your account, or want to learn more — fill in the form and we'll get back to you within 24 hours.
             </p>
           </div>
 
-          <!-- Contact info cards -->
           <div class="space-y-4">
-            <div class="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
-              <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            <div class="glass rounded-2xl p-5 border border-cyan-500/10 flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
               </div>
               <div>
-                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-0.5">Email Us</p>
-                <p class="text-slate-700 text-sm font-medium">info@logistiqoroyal.com</p>
-                <p class="text-slate-400 text-xs mt-0.5">We reply within 24 hours</p>
+                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Email Us</p>
+                <p class="text-white text-sm font-medium">info@logistiqoroyal.com</p>
+                <p class="text-slate-500 text-xs mt-0.5">We reply within 24 hours</p>
               </div>
             </div>
 
-
-
-            <div class="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
-              <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            <div class="glass rounded-2xl p-5 border border-amber-500/10 flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
               </div>
               <div>
-                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-0.5">Working Hours</p>
-                <p class="text-slate-700 text-sm font-medium">Monday – Friday</p>
-                <p class="text-slate-400 text-xs mt-0.5">9:00 AM – 6:00 PM</p>
+                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Working Hours</p>
+                <p class="text-white text-sm font-medium">Monday – Friday</p>
+                <p class="text-slate-500 text-xs mt-0.5">9:00 AM – 6:00 PM</p>
               </div>
             </div>
           </div>
 
-          <!-- Quick track reminder -->
-          <div class="p-4 bg-blue-50 border border-blue-200 rounded-2xl">
-            <p class="text-blue-800 text-sm font-semibold mb-1">🔍 Tracking a shipment?</p>
-            <p class="text-blue-600 text-xs mb-3">You can track your package instantly without contacting us.</p>
-            <a href="/track" class="inline-block bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-4 py-2 rounded-lg transition">
+          <div class="glass rounded-2xl p-5 border border-cyan-500/10">
+            <p class="text-cyan-400 text-sm font-semibold mb-1">🔍 Tracking a shipment?</p>
+            <p class="text-slate-400 text-xs mb-3">Track your package instantly without contacting us.</p>
+            <a href="/track" class="inline-block bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-bold px-4 py-2 rounded-lg transition glow-btn">
               Track Now →
             </a>
           </div>
-
         </div>
 
-        <!-- Right: contact form -->
+        <!-- Right form -->
         <div class="md:col-span-3">
-          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+          <div class="glass rounded-2xl p-8 border border-white/5 glow">
 
             {% if sent %}
-              <!-- Success state -->
               <div class="text-center py-12">
-                <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-5">
-                  <svg class="w-10 h-10 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-20 h-20 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-5">
+                  <svg class="w-10 h-10 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                   </svg>
                 </div>
-                <h3 class="text-2xl font-bold text-slate-800 mb-2">Message Sent!</h3>
-                <p class="text-slate-500 text-sm max-w-sm mx-auto mb-6">
-                  Thank you for reaching out to Logistiqoroyal. Our team will get back to you within 24 hours.
-                </p>
-                <a href="/" class="inline-block bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-2.5 rounded-xl transition text-sm">
+                <h3 class="text-2xl font-bold mb-2">Message Sent!</h3>
+                <p class="text-slate-400 text-sm max-w-sm mx-auto mb-6">Thank you for reaching out to NexaTrack. Our team will get back to you within 24 hours.</p>
+                <a href="/" class="inline-block bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold px-6 py-2.5 rounded-xl transition glow-btn text-sm">
                   Back to Home
                 </a>
               </div>
 
             {% else %}
-              <h3 class="text-xl font-bold text-slate-800 mb-1">Send Us a Message</h3>
+              <h3 class="text-xl font-bold mb-1">Send Us a Message</h3>
               <p class="text-slate-400 text-sm mb-7">Fill in the form below and we'll respond as soon as possible.</p>
 
               <form method="POST" action="/contact" class="space-y-5">
-
                 <div class="grid sm:grid-cols-2 gap-5">
                   <div>
                     <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Full Name *</label>
                     <input name="name" type="text" required placeholder="John Doe"
-                      class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50
-                             focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition"/>
+                      class="glass-input w-full px-4 py-2.5 rounded-xl text-sm transition"/>
                   </div>
                   <div>
                     <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Email Address *</label>
                     <input name="email" type="email" required placeholder="you@example.com"
-                      class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50
-                             focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition"/>
+                      class="glass-input w-full px-4 py-2.5 rounded-xl text-sm transition"/>
                   </div>
                 </div>
 
                 <div>
                   <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Subject</label>
-                  <select name="subject"
-                    class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50
-                           focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition">
+                  <select name="subject" class="glass-input w-full px-4 py-2.5 rounded-xl text-sm transition">
                     <option value="">Select a topic…</option>
                     <option>Shipment Enquiry</option>
                     <option>Tracking Issue</option>
@@ -166,35 +162,29 @@
                 <div>
                   <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Tracking Number (optional)</label>
                   <input name="tracking_ref" type="text" placeholder="e.g. TRK-A1B2C3D4"
-                    class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50 font-mono
-                           focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition uppercase"/>
+                    class="glass-input w-full px-4 py-2.5 rounded-xl text-sm font-mono uppercase transition"/>
                 </div>
 
                 <div>
                   <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Your Message *</label>
-                  <textarea name="message" required rows="5"
-                    placeholder="Please describe your question or issue in detail…"
-                    class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50
-                           focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition resize-none"></textarea>
+                  <textarea name="message" required rows="5" placeholder="Please describe your question or issue…"
+                    class="glass-input w-full px-4 py-2.5 rounded-xl text-sm transition resize-none"></textarea>
                 </div>
 
                 <div class="flex items-start gap-3">
-                  <input type="checkbox" id="consent" required
-                    class="mt-0.5 w-4 h-4 accent-blue-600 cursor-pointer"/>
+                  <input type="checkbox" id="consent" required class="mt-0.5 w-4 h-4 accent-cyan-500 cursor-pointer"/>
                   <label for="consent" class="text-xs text-slate-500 leading-relaxed cursor-pointer">
-                    I agree that Logistiqoroyal may use my contact details to respond to this enquiry.
-                    See our <a href="/privacy" class="text-blue-600 underline">Privacy Policy</a>.
+                    I agree that NexaTrack may use my contact details to respond to this enquiry.
+                    See our <a href="/privacy" class="text-cyan-400 underline">Privacy Policy</a>.
                   </label>
                 </div>
 
                 <button type="submit"
-                  class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition
-                         shadow-lg shadow-blue-200 text-sm">
+                  class="w-full py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold rounded-xl transition glow-btn text-sm">
                   Send Message →
                 </button>
               </form>
             {% endif %}
-
           </div>
         </div>
 
@@ -203,17 +193,17 @@
   </section>
 
   <!-- Footer -->
-  <footer class="bg-slate-900 text-slate-400 py-10">
-    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
-      <span class="text-white font-bold">Logistiqoroyal</span>
-      <div class="flex gap-6">
-        <a href="/track" class="hover:text-white transition">Track</a>
-        <a href="/about" class="hover:text-white transition">About</a>
-        <a href="/contact" class="hover:text-white transition">Contact</a>
-        <a href="/privacy" class="hover:text-white transition">Privacy</a>
-        <a href="/login" class="hover:text-white transition">Login</a>
+  <footer class="border-t border-white/5 py-10">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-400">
+      <span class="font-bold text-white">Nexa<span class="text-cyan-400">Track</span></span>
+      <div class="flex gap-8">
+        <a href="/track" class="hover:text-cyan-400 transition">Track</a>
+        <a href="/about" class="hover:text-cyan-400 transition">About</a>
+        <a href="/contact" class="hover:text-cyan-400 transition">Contact</a>
+        <a href="/privacy" class="hover:text-cyan-400 transition">Privacy</a>
+        <a href="/login" class="hover:text-cyan-400 transition">Login</a>
       </div>
-      <p class="text-xs">© 2025 Logistiqoroyal. All rights reserved.</p>
+      <p class="text-xs text-slate-600">© 2025 NexaTrack. All rights reserved.</p>
     </div>
   </footer>
 
