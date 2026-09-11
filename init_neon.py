@@ -1,7 +1,7 @@
 import psycopg2
 from werkzeug.security import generate_password_hash
 
-DB_URL = "postgresql://neondb_owner:npg_0nLAsdXy6Nqu@ep-red-breeze-atwzp1qa.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require"
+DB_URL = "postgresql://neondb_owner:npg_Rh1bKUW4tjGL@ep-proud-sun-axi7ylus-pooler.c-4.us-east-2.aws.neon.tech/neondb?sslmode=require"
 
 conn = psycopg2.connect(DB_URL)
 cur = conn.cursor()

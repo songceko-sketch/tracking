@@ -201,7 +201,20 @@ def login_required(role=None):
     return decorator
 
 
-# ── Public pages ──────────────────────────────────────────────────────────────
+@app.route("/uploads/<filename>")
+def uploaded_file(filename):
+    import mimetypes
+    upload_folder = "/tmp" if os.environ.get("DATABASE_URL") else os.path.join("static", "uploads")
+    filepath = os.path.join(upload_folder, filename)
+    if not os.path.exists(filepath):
+        return "", 404
+    mime = mimetypes.guess_type(filepath)[0] or "application/octet-stream"
+    with open(filepath, "rb") as f:
+        data = f.read()
+    from flask import Response
+    return Response(data, mimetype=mime)
+
+
 @app.route("/")
 def home():
     return render_template("home.html")
