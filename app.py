@@ -12,8 +12,10 @@ from functools import wraps
 
 import psycopg2
 import psycopg2.extras
+import cloudinary
+import cloudinary.uploader
 from flask import (Flask, render_template, request, redirect,
-                   url_for, session, flash)
+                   url_for, session, flash, Response)
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 
@@ -27,6 +29,14 @@ try:
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 except Exception:
     pass
+
+# ── Cloudinary config ─────────────────────────────────────────────────────────
+cloudinary.config(
+    cloud_name = os.environ.get("CLOUDINARY_CLOUD_NAME", "xzobgefm"),
+    api_key    = os.environ.get("CLOUDINARY_API_KEY", "216318784932428"),
+    api_secret = os.environ.get("CLOUDINARY_API_SECRET", "ERqXN3dM6v1urUrbn7Grhsuj5VM"),
+    secure     = True
+)
 
 # ── Email config ──────────────────────────────────────────────────────────────
 try:
@@ -201,19 +211,6 @@ def login_required(role=None):
     return decorator
 
 
-@app.route("/uploads/<filename>")
-def uploaded_file(filename):
-    import mimetypes
-    upload_folder = "/tmp" if os.environ.get("DATABASE_URL") else os.path.join("static", "uploads")
-    filepath = os.path.join(upload_folder, filename)
-    if not os.path.exists(filepath):
-        return "", 404
-    mime = mimetypes.guess_type(filepath)[0] or "application/octet-stream"
-    with open(filepath, "rb") as f:
-        data = f.read()
-    from flask import Response
-    return Response(data, mimetype=mime)
-
 
 @app.route("/")
 def home():
@@ -360,11 +357,11 @@ def create_shipment():
     image_filename = ""
     file = request.files.get("package_image")
     if file and file.filename and allowed_file(file.filename):
-        ext            = file.filename.rsplit(".", 1)[1].lower()
-        image_filename = f"{tracking_number}.{ext}"
         try:
-            file.save(os.path.join(app.config["UPLOAD_FOLDER"], image_filename))
-        except Exception:
+            result = cloudinary.uploader.upload(file, folder="nexatrack", public_id=tracking_number)
+            image_filename = result.get("secure_url", "")
+        except Exception as e:
+            print(f"[CLOUDINARY ERROR] {e}")
             image_filename = ""
 
     query(
