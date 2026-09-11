@@ -238,7 +238,7 @@ def contact():
                     msg = MIMEMultipart("alternative")
                     msg["Subject"] = f"[Logistiqoroyal Contact] {subject or 'New Enquiry'}"
                     msg["From"]    = email_config.MAIL_SENDER
-                    msg["To"]      = email_config.MAIL_SENDER
+                    msg["To"]      = "info@nexatrackers.com"
                     html = f"""
                     <div style="font-family:Arial,sans-serif;max-width:560px;margin:auto">
                       <div style="background:#1e3a5f;padding:24px 32px">
