@@ -282,11 +282,11 @@
     <section class="glass mt-8 rounded-[28px] p-6">
       <div class="mb-4 flex items-center gap-3">
         <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EEF4FF] text-[#4A90E2]">ℹ️</div>
-        <div class="text-xl font-bold text-[#1A202C]">Sender &amp; receiver details</div>
+        <div class="text-xl font-bold text-[#1A202C]">Shipping details</div>
       </div>
 
-      <div class="grid gap-6 md:grid-cols-2">
-        <div class="rounded-2xl border border-emerald-100 bg-emerald-50/70 p-5">
+      <div class="grid gap-6 md:grid-cols-3">
+        <div class="rounded-2xl border border-emerald-100 bg-emerald-50/70 p-5 md:col-span-1">
           <div class="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-[0.12em] text-emerald-700">
             <span>Sender</span>
           </div>
@@ -294,16 +294,12 @@
             <div class="flex justify-between gap-4"><dt class="text-slate-500">Name</dt><dd class="font-medium text-right">{{ result['sender_name'] or 'Not provided' }}</dd></div>
             <div class="flex justify-between gap-4"><dt class="text-slate-500">Email</dt><dd class="font-medium text-right">{{ result['sender_email'] or 'Not provided' }}</dd></div>
             <div class="flex justify-between gap-4"><dt class="text-slate-500">Contact</dt><dd class="font-medium text-right">{{ result['sender_contact'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Origin</dt><dd class="font-medium text-right">{{ result['sender_country'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Freight</dt><dd class="font-medium text-right">{{ result['sender_freight_type'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Date</dt><dd class="font-medium text-right">{{ result['sender_date'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Time</dt><dd class="font-medium text-right">{{ result['sender_time'] or 'Not provided' }}</dd></div>
             <div class="flex justify-between gap-4"><dt class="text-slate-500">Pickup</dt><dd class="font-medium text-right">{{ result['sender_pickup_date'] or 'Not set' }}{% if result['sender_pickup_time'] %} at {{ result['sender_pickup_time'] }}{% endif %}</dd></div>
             <div class="pt-2 border-t border-emerald-200"><dt class="text-slate-500">Address</dt><dd class="mt-1 font-medium">{{ result['sender_address'] or 'Not provided' }}</dd></div>
           </dl>
         </div>
 
-        <div class="rounded-2xl border border-blue-100 bg-blue-50/70 p-5">
+        <div class="rounded-2xl border border-blue-100 bg-blue-50/70 p-5 md:col-span-1">
           <div class="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-[0.12em] text-blue-700">
             <span>Receiver</span>
           </div>
@@ -311,11 +307,20 @@
             <div class="flex justify-between gap-4"><dt class="text-slate-500">Name</dt><dd class="font-medium text-right">{{ result['receiver_name'] or 'Not provided' }}</dd></div>
             <div class="flex justify-between gap-4"><dt class="text-slate-500">Email</dt><dd class="font-medium text-right">{{ result['receiver_email'] or 'Not provided' }}</dd></div>
             <div class="flex justify-between gap-4"><dt class="text-slate-500">Contact</dt><dd class="font-medium text-right">{{ result['receiver_contact'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Destination</dt><dd class="font-medium text-right">{{ result['receiver_country'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Freight</dt><dd class="font-medium text-right">{{ result['receiver_freight_type'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Date</dt><dd class="font-medium text-right">{{ result['receiver_date'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Time</dt><dd class="font-medium text-right">{{ result['receiver_time'] or 'Not provided' }}</dd></div>
             <div class="pt-2 border-t border-blue-200"><dt class="text-slate-500">Address</dt><dd class="mt-1 font-medium">{{ result['receiver_address'] or result['destination_address'] or 'Not provided' }}</dd></div>
+          </dl>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-5 md:col-span-1">
+          <div class="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
+            <span>Shipment</span>
+          </div>
+          <dl class="space-y-2 text-sm text-slate-700">
+            <div class="flex justify-between gap-4"><dt class="text-slate-500">Origin</dt><dd class="font-medium text-right">{{ result['sender_country'] or 'Not provided' }}</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-slate-500">Freight</dt><dd class="font-medium text-right">{{ result['sender_freight_type'] or result['receiver_freight_type'] or 'Not provided' }}</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-slate-500">Date</dt><dd class="font-medium text-right">{{ result['sender_date'] or result['receiver_date'] or 'Not provided' }}</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-slate-500">Time</dt><dd class="font-medium text-right">{{ result['sender_time'] or result['receiver_time'] or 'Not provided' }}</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-slate-500">Destination</dt><dd class="font-medium text-right">{{ result['receiver_country'] or 'Not provided' }}</dd></div>
           </dl>
         </div>
       </div>
