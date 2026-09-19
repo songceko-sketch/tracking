@@ -1,4 +1,4 @@
-"""
+ """
 Run this once to add new shipment detail columns to the existing database.
 Usage: python migrate.py
 """

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Ironclad Express delivers premium global shipping, tracking, warehousing, and customs services with enterprise-grade visibility." />
-  <title>Ironclad Express | Premium Global Logistics</title>
+  <meta name="description" content="NexaTrackers delivers premium global shipping, tracking, warehousing, and customs services with enterprise-grade visibility." />
+  <title>NexaTrackers | Premium Global Logistics</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800&display=swap');
@@ -129,6 +129,14 @@
       display: block;
     }
 
+    .feature-photo {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 1.1rem;
+      display: block;
+    }
+
     @media (max-width: 767px) {
       .nav-pill {
         width: 100%;
@@ -141,15 +149,15 @@
   <header class="sticky top-0 z-50 border-b border-[#dfeaf3] bg-white/80 backdrop-blur-md nav-shadow">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="flex h-20 items-center justify-between gap-6">
-        <a href="/" class="flex items-center gap-3" aria-label="Ironclad Express home">
+        <a href="/" class="flex items-center gap-3" aria-label="NexaTrackers home">
           <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#1B5E3F] to-[#0D3B66] text-white shadow-lg shadow-emerald-900/20">
             <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M3 10l9-5 9 5-9 5-9-5zm0 0v4l9 5 9-5v-4" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
           <div>
-            <div class="brand-heading text-xl font-extrabold tracking-tight text-[#0F3D2A]">Ironclad</div>
-            <div class="-mt-1 text-[10px] font-semibold uppercase tracking-[0.38em] text-slate-500">EXPRESS</div>
+            <div class="brand-heading text-xl font-extrabold tracking-tight text-[#0F3D2A]">NexaTrackers</div>
+            <div class="-mt-1 text-[10px] font-semibold uppercase tracking-[0.38em] text-slate-500">LOGISTICS</div>
           </div>
         </a>
 
@@ -208,7 +216,7 @@
             </h1>
 
             <p class="mt-6 max-w-xl text-base text-slate-200 sm:text-lg">
-              From pickup to final delivery, Ironclad coordinates air, sea, warehousing, and customs support with real-time visibility and a team that acts before small issues become costly delays.
+              From pickup to final delivery, NexaTrackers coordinates air, sea, warehousing, and customs support with real-time visibility and a team that acts before small issues become costly delays.
             </p>
 
             <div class="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -243,7 +251,13 @@
             <div class="hero-grid relative overflow-hidden rounded-[30px] border border-white/15 bg-white/5 p-4 shadow-2xl shadow-[#0F3D2A]/25">
               <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(74,144,226,0.3),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(45,134,89,0.38),_transparent_35%)]"></div>
               <div class="relative rounded-[26px] border border-white/10 bg-[#0b1f1a]/70 p-5">
-                <div class="flex items-center justify-between pb-4 text-sm text-slate-200">
+                <img
+                  src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80"
+                  alt="Shipping containers in a cargo port"
+                  class="h-64 w-full rounded-2xl border border-white/10 object-cover shadow-lg shadow-black/20"
+                />
+
+                <div class="mt-5 flex items-center justify-between pb-3 text-sm text-slate-200">
                   <span class="font-medium">Shipment movement</span>
                   <span class="rounded-full bg-emerald-500/20 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-200">Live</span>
                 </div>
@@ -317,70 +331,88 @@
       </div>
 
       <div class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-        <article class="service-card rounded-[28px] p-8">
-          <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EAF6EF] text-[#1B5E3F]">
-            <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M2 15l8-4 8 4-8 4-8-4zm8-4V4m8 11l2-1v-6l-2 1m-8 5v-6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+        <article class="service-card rounded-[28px] p-4">
+          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80" alt="Cargo plane in flight" class="feature-photo mb-5" />
+          <div class="px-4 pb-4">
+            <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EAF6EF] text-[#1B5E3F]">
+              <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M2 15l8-4 8 4-8 4-8-4zm8-4V4m8 11l2-1v-6l-2 1m-8 5v-6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-[#1A202C]">Air freight</h3>
+            <p class="mt-4 text-base leading-7 text-slate-600">Fast transit for urgent cargo, carefully coordinated across airline networks, customs clearance, and final-mile delivery.</p>
+            <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
           </div>
-          <h3 class="text-2xl font-bold text-[#1A202C]">Air freight</h3>
-          <p class="mt-4 text-base leading-7 text-slate-600">Fast transit for urgent cargo, carefully coordinated across airline networks, customs clearance, and final-mile delivery.</p>
-          <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
         </article>
 
-        <article class="service-card rounded-[28px] p-8">
-          <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EDF2FF] text-[#0D3B66]">
-            <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M3 14h15l2 3V18H3v-4zm2-5h11l3 3v2H5V9zm3-5h8l4 4H6V4z" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+        <article class="service-card rounded-[28px] p-4">
+          <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=900&q=80" alt="Container cargo ship" class="feature-photo mb-5" />
+          <div class="px-4 pb-4">
+            <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EDF2FF] text-[#0D3B66]">
+              <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M3 14h15l2 3V18H3v-4zm2-5h11l3 3v2H5V9zm3-5h8l4 4H6V4z" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-[#1A202C]">Sea freight</h3>
+            <p class="mt-4 text-base leading-7 text-slate-600">Cost-effective shipping for large, heavy, or consolidated loads with FCL, LCL, and port-to-door coordination.</p>
+            <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
           </div>
-          <h3 class="text-2xl font-bold text-[#1A202C]">Sea freight</h3>
-          <p class="mt-4 text-base leading-7 text-slate-600">Cost-effective shipping for large, heavy, or consolidated loads with FCL, LCL, and port-to-door coordination.</p>
-          <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
         </article>
 
-        <article class="service-card rounded-[28px] p-8">
-          <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EEF8FF] text-[#4A90E2]">
-            <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M3 11h18M6 7h12l2 4H4l2-4zm-2 8h18v2H4v-2z" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+        <article class="service-card rounded-[28px] p-4">
+          <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=900&q=80" alt="Trucks and freight logistics" class="feature-photo mb-5" />
+          <div class="px-4 pb-4">
+            <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EEF8FF] text-[#4A90E2]">
+              <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M3 11h18M6 7h12l2 4H4l2-4zm-2 8h18v2H4v-2z" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-[#1A202C]">LCL & truckload</h3>
+            <p class="mt-4 text-base leading-7 text-slate-600">Flexible road freight optimization for partial and full-load transportation with scheduled last-mile precision.</p>
+            <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
           </div>
-          <h3 class="text-2xl font-bold text-[#1A202C]">LCL & truckload</h3>
-          <p class="mt-4 text-base leading-7 text-slate-600">Flexible road freight optimization for partial and full-load transportation with scheduled last-mile precision.</p>
-          <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
         </article>
 
-        <article class="service-card rounded-[28px] p-8">
-          <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F2F7FF] text-[#0D3B66]">
-            <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M4 20V8l8-4 8 4v12m-8-8v8m-8 0h16" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+        <article class="service-card rounded-[28px] p-4">
+          <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=900&q=80" alt="Modern warehouse and cargo distribution" class="feature-photo mb-5" />
+          <div class="px-4 pb-4">
+            <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F2F7FF] text-[#0D3B66]">
+              <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M4 20V8l8-4 8 4v12m-8-8v8m-8 0h16" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-[#1A202C]">Warehousing</h3>
+            <p class="mt-4 text-base leading-7 text-slate-600">Integrated storage, inventory control, cross-docking, and dispatch planning for short or long-term supply needs.</p>
+            <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
           </div>
-          <h3 class="text-2xl font-bold text-[#1A202C]">Warehousing</h3>
-          <p class="mt-4 text-base leading-7 text-slate-600">Integrated storage, inventory control, cross-docking, and dispatch planning for short or long-term supply needs.</p>
-          <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
         </article>
 
-        <article class="service-card rounded-[28px] p-8">
-          <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F0F8F5] text-[#1B5E3F]">
-            <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M7 5h10l3 4v10H4V9l3-4zm3 4h4m-4 4h4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+        <article class="service-card rounded-[28px] p-4">
+          <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=900&q=80" alt="Customs and import paperwork" class="feature-photo mb-5" />
+          <div class="px-4 pb-4">
+            <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F0F8F5] text-[#1B5E3F]">
+              <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M7 5h10l3 4v10H4V9l3-4zm3 4h4m-4 4h4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-[#1A202C]">Customs brokerage</h3>
+            <p class="mt-4 text-base leading-7 text-slate-600">Specialized border compliance, declarations, inspections, and fast documentation to clear goods without delays.</p>
+            <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
           </div>
-          <h3 class="text-2xl font-bold text-[#1A202C]">Customs brokerage</h3>
-          <p class="mt-4 text-base leading-7 text-slate-600">Specialized border compliance, declarations, inspections, and fast documentation to clear goods without delays.</p>
-          <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
         </article>
 
-        <article class="service-card rounded-[28px] p-8">
-          <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F9F2EA] text-[#B7791F]">
-            <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3zm0 0v18m-8-9h16" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+        <article class="service-card rounded-[28px] p-4">
+          <img src="https://images.unsplash.com/photo-1598257006626-48b0c252070d?auto=format&fit=crop&w=900&q=80" alt="Import cargo at the port" class="feature-photo mb-5" />
+          <div class="px-4 pb-4">
+            <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F9F2EA] text-[#B7791F]">
+              <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3zm0 0v18m-8-9h16" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-[#1A202C]">Import services</h3>
+            <p class="mt-4 text-base leading-7 text-slate-600">End-to-end import support from origin pickup to destination release, documentation, and final delivery coordination.</p>
+            <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
           </div>
-          <h3 class="text-2xl font-bold text-[#1A202C]">Import services</h3>
-          <p class="mt-4 text-base leading-7 text-slate-600">End-to-end import support from origin pickup to destination release, documentation, and final delivery coordination.</p>
-          <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
         </article>
       </div>
     </section>
@@ -436,7 +468,7 @@
               <div class="mt-2 text-slate-600">verified customer reviews and long-term enterprise accounts</div>
             </div>
             <div class="rounded-2xl border border-[#dfeaf3] bg-white p-5 shadow-sm">
-              <p class="text-base leading-7 text-slate-700">“Ironclad delivered our shipment three days early. Their communication and coordination were exceptional from booking to delivery.”</p>
+              <p class="text-base leading-7 text-slate-700">“NexaTrackers delivered our shipment three days early. Their communication and coordination were exceptional from booking to delivery.”</p>
               <div class="mt-4 font-semibold text-[#1B5E3F]">— Sarah Chen, Beijing</div>
             </div>
           </div>
@@ -587,7 +619,7 @@
           <div class="rounded-[28px] border border-[#e6edf6] bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
             <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#EAF6EF] text-2xl text-[#1B5E3F]">✉️</div>
             <div class="text-lg font-semibold text-[#1A202C]">Email support</div>
-            <div class="mt-2 text-slate-600">info@ironcladexpresslogistic.com</div>
+            <div class="mt-2 text-slate-600">info@nexatrackers.com</div>
           </div>
           <div class="rounded-[28px] border border-[#e6edf6] bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
             <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#EAF6EF] text-2xl text-[#1B5E3F]">💬</div>
@@ -613,8 +645,8 @@
           </svg>
         </div>
         <div>
-          <div class="brand-heading text-lg font-extrabold text-[#0F3D2A]">Ironclad</div>
-          <div class="-mt-1 text-[9px] font-semibold uppercase tracking-[0.28em] text-slate-500">EXPRESS</div>
+          <div class="brand-heading text-lg font-extrabold text-[#0F3D2A]">NexaTrackers</div>
+          <div class="-mt-1 text-[9px] font-semibold uppercase tracking-[0.28em] text-slate-500">LOGISTICS</div>
         </div>
       </div>
 
@@ -625,7 +657,7 @@
         <a href="/contact" class="transition hover:text-[#1B5E3F]">Contact</a>
       </div>
 
-      <div class="text-slate-500">© 2026 Ironclad Express</div>
+      <div class="text-slate-500">© 2026 NexaTrackers</div>
     </div>
   </footer>
 
