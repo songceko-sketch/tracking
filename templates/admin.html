@@ -6,92 +6,105 @@
   <title>Admin Dashboard – NexaTrackers</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen bg-slate-100">
+<body class="min-h-screen bg-[radial-gradient(circle_at_top,_#f8fafc_0%,_#eef6ff_35%,_#edf7f3_100%)] text-slate-800">
 
-  <!-- Navbar -->
-  <nav class="bg-slate-900 border-b border-slate-700 px-6 py-4 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M20 7l-8-4-8 4m16 0v10l-8 4m0-14L4 17m8 4V11"/>
-        </svg>
+  <nav class="border-b border-slate-200/80 bg-white/80 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-3">
+        <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-[#1B5E3F] to-[#0D3B66] text-lg font-black text-white">N</div>
+        <div>
+          <div class="text-lg font-black tracking-tight text-slate-900">NexaTrackers</div>
+          <div class="-mt-1 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500">Admin Panel</div>
+        </div>
       </div>
-      <span class="text-white font-bold text-lg">NexaTrackers</span>
-      <span class="text-slate-400 text-sm ml-2">Admin Panel</span>
-    </div>
-    <div class="flex items-center gap-4">
-      <span class="text-slate-300 text-sm">👤 {{ session.username }}</span>
-      <a href="/logout" class="text-sm text-red-400 hover:text-red-300 transition">Logout</a>
+      <div class="flex items-center gap-4">
+        <span class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700">👤 {{ session.username }}</span>
+        <a href="/logout" class="rounded-full border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 transition hover:bg-red-100">Logout</a>
+      </div>
     </div>
   </nav>
 
-  <div class="max-w-7xl mx-auto px-4 py-8">
+  <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 
     {% with messages = get_flashed_messages() %}
       {% if messages %}
-        <div class="mb-6 p-4 bg-green-100 border border-green-300 rounded-xl text-green-800 text-sm font-medium">
+        <div class="mb-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800 shadow-sm">
           ✓ {{ messages[0] }}
         </div>
       {% endif %}
     {% endwith %}
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="mb-6 grid gap-4 md:grid-cols-3">
+      <div class="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_18px_40px_rgba(15,61,42,0.04)]">
+        <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Clients</div>
+        <div class="mt-3 text-3xl font-black text-slate-900">{{ clients|length }}</div>
+        <div class="mt-1 text-sm text-slate-500">active accounts</div>
+      </div>
+      <div class="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_18px_40px_rgba(15,61,42,0.04)]">
+        <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Shipments</div>
+        <div class="mt-3 text-3xl font-black text-slate-900">{{ shipments|length }}</div>
+        <div class="mt-1 text-sm text-slate-500">tracked records</div>
+      </div>
+      <div class="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_18px_40px_rgba(15,61,42,0.04)]">
+        <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Operational</div>
+        <div class="mt-3 text-3xl font-black text-emerald-600">Live</div>
+        <div class="mt-1 text-sm text-slate-500">route monitoring</div>
+      </div>
+    </div>
 
-      <!-- ── Panel 1: Manage Clients ── -->
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <h2 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-          <span class="w-7 h-7 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-sm">👥</span>
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+
+      <div class="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_20px_50px_rgba(15,61,42,0.05)]">
+        <h2 class="mb-5 flex items-center gap-3 text-lg font-bold text-slate-900">
+          <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-100 text-base text-blue-700">👥</span>
           Manage Clients
         </h2>
 
-        <form method="POST" action="/admin/create_client" class="space-y-3 mb-5">
+        <form method="POST" action="/admin/create_client" class="space-y-3 mb-6">
           <input name="username" type="text" required placeholder="Username"
-            class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+            class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
           <input name="email" type="email" required placeholder="Email"
-            class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+            class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
           <input name="password" type="password" required placeholder="Password"
-            class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+            class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
           <button type="submit"
-            class="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold rounded-lg transition">
+            class="w-full rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 px-4 py-2.5 text-sm font-semibold text-white shadow-[0_12px_25px_rgba(37,99,235,0.25)] transition hover:translate-y-[-1px]">
             + Create Client
           </button>
         </form>
 
-        <!-- Existing clients list -->
         <div class="border-t border-slate-100 pt-4">
-          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">Existing Clients</p>
+          <p class="mb-3 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">Existing Clients</p>
           {% if clients %}
             <ul class="space-y-2">
               {% for c in clients %}
-                <li class="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg">
+                <li class="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 p-3">
                   <div>
-                    <p class="text-sm font-medium text-slate-700">{{ c.username }}</p>
-                    <p class="text-xs text-slate-400">{{ c.email }}</p>
+                    <p class="text-sm font-semibold text-slate-800">{{ c.username }}</p>
+                    <p class="text-xs text-slate-500">{{ c.email }}</p>
                   </div>
-                  <span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">ID: {{ c.id }}</span>
+                  <span class="rounded-full bg-blue-100 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-blue-700">ID {{ c.id }}</span>
                 </li>
               {% endfor %}
             </ul>
           {% else %}
-            <p class="text-sm text-slate-400 text-center py-4">No clients yet.</p>
+            <p class="py-4 text-center text-sm text-slate-400">No clients yet.</p>
           {% endif %}
         </div>
       </div>
 
-      <!-- ── Panel 2: Create Shipment ── -->
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <h2 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-          <span class="w-7 h-7 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center text-sm">📦</span>
+      <div class="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_20px_50px_rgba(15,61,42,0.05)] xl:col-span-2">
+        <h2 class="mb-5 flex items-center gap-3 text-lg font-bold text-slate-900">
+          <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-100 text-base text-emerald-700">📦</span>
           Create Shipment
         </h2>
 
         <form method="POST" action="/admin/create_shipment" enctype="multipart/form-data" class="space-y-4">
 
           <div>
-            <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Assign to Client</label>
+            <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Assign to Client</label>
             <select name="client_id" required
-              class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 bg-white">
+              class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100">
               <option value="" disabled selected>Select a client…</option>
               {% for c in clients %}
                 <option value="{{ c.id }}">{{ c.username }} ({{ c.email }})</option>
@@ -99,240 +112,208 @@
             </select>
           </div>
 
-          <div class="rounded-xl border border-emerald-100 bg-emerald-50 p-3">
-            <p class="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">Sender information</p>
+          <div class="rounded-2xl border border-emerald-100 bg-emerald-50 p-3">
+            <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-700">Sender Details</p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Sender name</label>
-              <input name="sender_name" type="text" required placeholder="John Carter"
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Name</label>
+              <input name="sender_name" type="text" required placeholder="Gabriel Foster"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"/>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Sender email</label>
-              <input name="sender_email" type="email" required placeholder="john@company.com"
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Phone</label>
+              <input name="sender_contact" type="text" required placeholder="419-845-5875"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"/>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Sender contact</label>
-              <input name="sender_contact" type="text" required placeholder="+1 (555) 987-1132"
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Email</label>
+              <input name="sender_email" type="email" required placeholder="gabrielfoster16@gmail.com"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"/>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Origin country</label>
-              <input name="sender_country" type="text" required placeholder="United States"
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Freight type</label>
-              <select name="sender_freight_type" required
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 bg-white">
-                <option value="">Select freight type</option>
-                <option>Air freight</option>
-                <option>Sea freight</option>
-                <option>Ground transport</option>
-                <option>Warehousing</option>
-                <option>Customs clearance</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Shipment date</label>
-              <input name="sender_date" type="date" required
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Shipment time</label>
-              <input name="sender_time" type="time" required
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Pickup date</label>
-              <input name="sender_pickup_date" type="date"
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Pickup time</label>
-              <input name="sender_pickup_time" type="time"
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Origin</label>
+              <input name="sender_country" type="text" required placeholder="Memphis, United States"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"/>
             </div>
             <div class="md:col-span-2">
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Sender address</label>
-              <textarea name="sender_address" rows="2" required placeholder="123 Harbor Lane, Memphis, TN, USA"
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 resize-none"></textarea>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Address</label>
+              <textarea name="sender_address" rows="2" required placeholder="Memphis, TN, USA"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100 resize-none"></textarea>
             </div>
           </div>
 
-          <div class="rounded-xl border border-blue-100 bg-blue-50 p-3">
-            <p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-700">Receiver information</p>
+          <div class="rounded-2xl border border-blue-100 bg-blue-50 p-3">
+            <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-blue-700">Receiver Details</p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Receiver name</label>
-              <input name="receiver_name" type="text" required placeholder="Emma Brooks"
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Name</label>
+              <input name="receiver_name" type="text" required placeholder="Dixie Lee Fusco"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Receiver email</label>
-              <input name="receiver_email" type="email" required placeholder="emma@client.com"
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Phone</label>
+              <input name="receiver_contact" type="text" required placeholder="601-757-5752"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Receiver contact</label>
-              <input name="receiver_contact" type="text" required placeholder="+44 20 7946 0958"
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Email</label>
+              <input name="receiver_email" type="email" required placeholder="medixielee@yahoo.com"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Destination country</label>
-              <input name="receiver_country" type="text" required placeholder="United Kingdom"
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Freight type</label>
-              <select name="receiver_freight_type" required
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white">
-                <option value="">Select freight type</option>
-                <option>Air freight</option>
-                <option>Sea freight</option>
-                <option>Ground transport</option>
-                <option>Warehousing</option>
-                <option>Customs clearance</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Shipment date</label>
-              <input name="receiver_date" type="date" required
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Shipment time</label>
-              <input name="receiver_time" type="time" required
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Destination</label>
+              <input name="destination" type="text" required placeholder="Brookhaven, United States"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
             </div>
             <div class="md:col-span-2">
-              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Receiver address</label>
-              <textarea name="receiver_address" rows="2" required placeholder="88 Dock Street, London, UK"
-                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Address</label>
+              <textarea name="receiver_address" rows="2" required placeholder="3001 Old Malcum Rd NE, Brookhaven, MS 39601, USA"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100 resize-none"></textarea>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-violet-100 bg-violet-50 p-3">
+            <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-violet-700">Shipment Details</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="md:col-span-2">
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Shipment Description</label>
+              <textarea name="shipment_description" rows="2" required placeholder="2011 BMW 328i Xdrive"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100 resize-none"></textarea>
+            </div>
+            <div>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Status</label>
+              <input name="status" type="text" value="Registered & Pending"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"/>
+            </div>
+            <div>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Current Location</label>
+              <input name="current_location" type="text" required placeholder="Memphis, TN, USA"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"/>
+            </div>
+            <div>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Origin</label>
+              <input name="origin" type="text" required placeholder="Memphis, United States"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"/>
+            </div>
+            <div>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Destination</label>
+              <input name="destination" type="text" required placeholder="Brookhaven, United States"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"/>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-amber-100 bg-amber-50 p-3">
+            <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-amber-700">Schedule &amp; Delivery</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Departure Date</label>
+              <input name="departure_date" type="date" required
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100"/>
+            </div>
+            <div>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Departure Time</label>
+              <input name="departure_time" type="time" required
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100"/>
+            </div>
+            <div>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Arrival Date</label>
+              <input name="arrival_date" type="date" required
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100"/>
+            </div>
+            <div>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Arrival Time</label>
+              <input name="arrival_time" type="time" required
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100"/>
+            </div>
+            <div>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Expected Delivery Date</label>
+              <input name="expected_delivery_date" type="date" required
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100"/>
+            </div>
+            <div>
+              <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Expected Delivery Time</label>
+              <input name="expected_delivery_time" type="time" required
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100"/>
             </div>
           </div>
 
           <div>
-            <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Package Type</label>
-            <select name="package_type"
-              class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 bg-white">
-              <option value="">Select type…</option>
-              <option>Box</option>
-              <option>Envelope</option>
-              <option>Pallet</option>
-              <option>Crate</option>
-              <option>Tube</option>
-              <option>Bag</option>
-              <option>Fragile</option>
-              <option>Other</option>
-            </select>
+            <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Comments</label>
+            <textarea name="comments" rows="3" placeholder="Your vehicle is in safe hands and ready to be delivered to your address. Note: insurance is required to validate the delivery."
+              class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100 resize-none"></textarea>
           </div>
 
-          <div>
-            <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Description</label>
-            <textarea name="description" rows="2" placeholder="e.g. Electronics, clothing, documents…"
-              class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 resize-none"></textarea>
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Weight &amp; Dimensions</label>
-            <div class="grid grid-cols-2 gap-2">
-              <div class="relative">
-                <input name="weight_kg" type="number" step="0.01" min="0" placeholder="Weight"
-                  class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 pr-10"/>
-                <span class="absolute right-3 top-2 text-xs text-slate-400">kg</span>
-              </div>
-              <div class="relative">
-                <input name="length_cm" type="number" step="0.1" min="0" placeholder="Length"
-                  class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 pr-10"/>
-                <span class="absolute right-3 top-2 text-xs text-slate-400">cm</span>
-              </div>
-              <div class="relative">
-                <input name="width_cm" type="number" step="0.1" min="0" placeholder="Width"
-                  class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 pr-10"/>
-                <span class="absolute right-3 top-2 text-xs text-slate-400">cm</span>
-              </div>
-              <div class="relative">
-                <input name="height_cm" type="number" step="0.1" min="0" placeholder="Height"
-                  class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 pr-10"/>
-                <span class="absolute right-3 top-2 text-xs text-slate-400">cm</span>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Package Image</label>
-            <div id="drop-zone"
-              class="border-2 border-dashed border-slate-200 rounded-xl p-4 text-center cursor-pointer hover:border-emerald-400 transition">
-              <input type="file" name="package_image" id="img-input" accept="image/*" class="hidden"
-                onchange="previewImg(this)"/>
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-3">
+            <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Package Image</p>
+            <div id="drop-zone" class="mt-3 cursor-pointer rounded-xl border-2 border-dashed border-slate-200 bg-white p-3 text-center transition hover:border-emerald-400">
+              <input type="file" name="package_image" id="img-input" accept="image/*" class="hidden" onchange="previewImg(this)"/>
               <div id="img-placeholder" onclick="document.getElementById('img-input').click()">
-                <div class="text-2xl mb-1">🖼️</div>
-                <p class="text-xs text-slate-400">Click to upload or drag &amp; drop</p>
-                <p class="text-xs text-slate-300">PNG, JPG, WEBP up to 5MB</p>
+                <div class="mb-1 text-2xl">🖼️</div>
+                <p class="text-xs text-slate-500">Upload package image</p>
               </div>
-              <img id="img-preview" src="" alt="" class="hidden mx-auto max-h-32 rounded-lg mt-2"/>
+              <img id="img-preview" src="" alt="" class="mx-auto mt-2 hidden max-h-28 rounded-lg object-cover"/>
             </div>
           </div>
 
-          <p class="text-xs text-slate-400 bg-slate-50 rounded-lg p-2">
+          <p class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] text-slate-500">
             Tracking number auto-generated (e.g. TRK-A1B2C3D4).
           </p>
+
           <button type="submit"
-            class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-lg transition">
+            class="w-full rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 px-4 py-2.5 text-sm font-semibold text-white shadow-[0_12px_25px_rgba(16,185,129,0.25)] transition hover:translate-y-[-1px]">
             Generate &amp; Assign Shipment
           </button>
         </form>
 
-        <!-- Recent shipments -->
-        <div class="border-t border-slate-100 pt-4 mt-5">
-          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">Recent Shipments</p>
+        <div class="mt-6 border-t border-slate-100 pt-4">
+          <p class="mb-3 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">Recent Shipments</p>
           {% if shipments %}
-            <ul class="space-y-2 max-h-64 overflow-y-auto">
+            <ul class="space-y-2">
               {% for s in shipments %}
-                <li class="p-2.5 bg-slate-50 rounded-lg">
-                  <div class="flex items-center gap-2">
+                <li class="rounded-2xl border border-slate-200 bg-slate-50 p-3">
+                  <div class="flex items-center gap-3">
                     {% if s.image_filename %}
-                      <img src="{{ s.image_filename }}" class="w-10 h-10 rounded-lg object-cover flex-shrink-0"/>
+                      <img src="{{ s.image_filename }}" class="h-12 w-12 rounded-xl object-cover"/>
                     {% else %}
-                      <div class="w-10 h-10 bg-slate-200 rounded-lg flex items-center justify-center text-slate-400 text-lg flex-shrink-0">📦</div>
+                      <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-200 text-lg text-slate-500">📦</div>
                     {% endif %}
-                    <div class="flex-1 min-w-0">
-                      <div class="flex items-center justify-between">
-                        <span class="text-xs font-mono font-bold text-slate-700 truncate">{{ s.tracking_number }}</span>
-                        <span class="text-xs bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full ml-1 flex-shrink-0">{{ s.current_status }}</span>
+                    <div class="min-w-0 flex-1">
+                      <div class="flex items-center justify-between gap-2">
+                        <span class="truncate font-mono text-xs font-bold text-slate-800">{{ s.tracking_number }}</span>
+                        <span class="rounded-full bg-slate-200 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-700">{{ s.current_status }}</span>
                       </div>
-                      <p class="text-xs text-slate-400">{{ s.username }}</p>
-                      {% if s.weight_kg %}<p class="text-xs text-slate-500">⚖️ {{ s.weight_kg }}kg{% if s.length_cm %} &middot; {{ s.length_cm }}×{{ s.width_cm }}×{{ s.height_cm }}cm{% endif %}</p>{% endif %}
-                      {% if s.destination_address %}<p class="text-xs text-emerald-600 truncate">🏁 {{ s.destination_address }}</p>{% endif %}
+                      <p class="text-xs text-slate-500">{{ s.username }}</p>
+                      {% if s.destination_address %}<p class="mt-1 truncate text-xs text-emerald-600">🏁 {{ s.destination_address }}</p>{% endif %}
                     </div>
                   </div>
                 </li>
               {% endfor %}
             </ul>
           {% else %}
-            <p class="text-sm text-slate-400 text-center py-4">No shipments yet.</p>
+            <p class="py-4 text-center text-sm text-slate-400">No shipments yet.</p>
           {% endif %}
         </div>
       </div>
 
-      <!-- ── Panel 3: Update Shipment Location ── -->
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <h2 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-          <span class="w-7 h-7 bg-violet-100 text-violet-600 rounded-lg flex items-center justify-center text-sm">📍</span>
+      <div class="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_20px_50px_rgba(15,61,42,0.05)]">
+        <h2 class="mb-5 flex items-center gap-3 text-lg font-bold text-slate-900">
+          <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-100 text-base text-violet-700">📍</span>
           Update Location
         </h2>
 
         <form method="POST" action="/admin/update_location" class="space-y-3">
           <div>
-            <label class="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wide">Tracking Number</label>
+            <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Tracking Number</label>
             <select name="shipment_id" required
-              class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 bg-white">
+              class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100">
               <option value="" disabled selected>Select shipment…</option>
               {% for s in shipments %}
                 <option value="{{ s.id }}">{{ s.tracking_number }} – {{ s.username }}</option>
@@ -340,38 +321,32 @@
             </select>
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wide">City Name</label>
+            <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">City Name</label>
             <input name="city_name" type="text" required placeholder="e.g. Paris, New York, Tokyo"
-              class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-400"/>
+              class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"/>
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wide">Status Note</label>
+            <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Status Note</label>
             <input name="status_notes" type="text" required placeholder="e.g. In Transit, Arrived at Hub"
-              class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-400"/>
+              class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"/>
           </div>
           <button type="submit"
-            class="w-full py-2 bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold rounded-lg transition">
+            class="w-full rounded-xl bg-gradient-to-r from-violet-600 to-violet-500 px-4 py-2.5 text-sm font-semibold text-white shadow-[0_12px_25px_rgba(124,58,237,0.25)] transition hover:translate-y-[-1px]">
             Save Location Update
           </button>
         </form>
 
         <div class="mt-5 space-y-3">
-          <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
-            <p class="text-xs text-amber-700">
-              <strong>Tip:</strong> Use standard city names (e.g. "London", "Dubai", "Los Angeles") for accurate map geocoding.
-            </p>
+          <div class="rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800">
+            <strong>Tip:</strong> Use standard city names for accurate route visibility.
           </div>
-          <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg flex items-start gap-2">
-            <span class="text-emerald-500 text-base leading-none mt-0.5">✉</span>
-            <p class="text-xs text-emerald-700">
-              <strong>Email notifications are enabled.</strong> The client will automatically receive an email every time you save a location update. Configure sender credentials in <code class="bg-emerald-100 px-1 rounded">email_config.py</code>.
-            </p>
+          <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-800">
+            <strong>Email notifications are enabled.</strong> The client receives updates automatically after every route change.
           </div>
         </div>
       </div>
-
-    </div><!-- /grid -->
-  </div><!-- /container -->
+    </div>
+  </div>
 
   <script>
     function previewImg(input) {
@@ -385,7 +360,7 @@
       };
       reader.readAsDataURL(file);
     }
-    // Drag & drop
+
     const dz = document.getElementById('drop-zone');
     if (dz) {
       dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('border-emerald-400'); });

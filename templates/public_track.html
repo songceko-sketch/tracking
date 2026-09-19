@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -97,11 +97,6 @@
       background: linear-gradient(180deg, #fff 0%, #f9fbff 100%);
     }
 
-    .status-pill {
-      background: rgba(16, 185, 129, 0.12);
-      color: #047857;
-    }
-
     .premium-stat {
       background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(240,247,255,0.9));
       border: 1px solid rgba(148, 163, 184, 0.18);
@@ -167,7 +162,7 @@
                 value="{{ tracking_number }}"
                 required
                 aria-label="Tracking number"
-                placeholder="Enter tracking number (e.g. IEL893136190-CARGO)"
+                placeholder="Enter tracking number (e.g. TRK-A1B2C3D4)"
                 class="w-full border-0 bg-transparent text-base font-mono text-slate-700 placeholder:text-slate-400 focus:outline-none"
               />
             </div>
@@ -238,27 +233,27 @@
           <div class="mt-4 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
               <div class="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">Live Status</div>
-              <div class="mt-2 text-2xl font-black text-emerald-300">{{ result["current_status"] or 'Registered & Pending' }}</div>
+              <div class="mt-2 text-2xl font-black text-emerald-300">{{ result['current_status'] or 'Registered & Pending' }}</div>
             </div>
             <div class="text-left md:text-right">
               <div class="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">Tracking Number</div>
-              <div class="mt-2 font-mono text-lg font-semibold text-white">{{ result["tracking_number"] }}</div>
+              <div class="mt-2 font-mono text-lg font-semibold text-white">{{ result['tracking_number'] }}</div>
             </div>
           </div>
 
           <div class="mt-5 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm leading-7 text-slate-200">
-            Your {{ result['description'] or 'shipment' }} is currently <span class="font-semibold text-white">{{ result["current_status"] or 'Registered & Pending' }}</span> at <span class="font-semibold text-white">{{ result['sender_address'] or 'Memphis, TN, USA' }}</span>.
+            Your {{ result['shipment_description'] or result['description'] or 'shipment' }} is currently <span class="font-semibold text-white">{{ result['current_status'] or 'Registered & Pending' }}</span> at <span class="font-semibold text-white">{{ result['current_location'] or result['sender_address'] or 'Memphis, TN, USA' }}</span>.
           </div>
         </div>
 
         <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
           <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
             <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Current Status</div>
-            <div class="mt-2 text-lg font-bold text-[#1A202C]">{{ result["current_status"] or 'Registered & Pending' }}</div>
+            <div class="mt-2 text-lg font-bold text-[#1A202C]">{{ result['current_status'] or 'Registered & Pending' }}</div>
           </div>
           <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
             <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Tracking Number</div>
-            <div class="mt-2 font-mono text-base font-bold text-[#1A202C]">{{ result["tracking_number"] }}</div>
+            <div class="mt-2 font-mono text-base font-bold text-[#1A202C]">{{ result['tracking_number'] }}</div>
           </div>
           <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:col-span-2 xl:col-span-1">
             <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Current Location</div>
@@ -292,68 +287,50 @@
 
     <section class="mt-8 rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,61,42,0.03)]">
       <div class="mb-5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">Shipment Details</div>
-      <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-        <div class="rounded-2xl bg-slate-50 p-4">
+      <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-5">
+        <div class="rounded-2xl bg-slate-50 p-4 xl:col-span-2">
           <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Shipment Description</div>
-          <div class="mt-2 text-sm font-semibold text-slate-700">{{ result['description'] or result['package_type'] or 'Not provided' }}</div>
+          <div class="mt-2 text-sm font-semibold text-slate-700">{{ result['shipment_description'] or result['description'] or 'Not provided' }}</div>
         </div>
         <div class="rounded-2xl bg-slate-50 p-4">
           <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Tracking Number</div>
-          <div class="mt-2 font-mono text-sm font-semibold text-slate-700">{{ result['tracking_number'] }}</div>
+          <div class="mt-2 text-sm font-semibold text-slate-700 font-mono">{{ result['tracking_number'] }}</div>
         </div>
         <div class="rounded-2xl bg-slate-50 p-4">
           <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Status</div>
           <div class="mt-2 text-sm font-semibold text-slate-700">{{ result['current_status'] or 'Registered & Pending' }}</div>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
+        <div class="rounded-2xl bg-slate-50 p-4 xl:col-span-2">
           <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Current Location</div>
-          <div class="mt-2 text-sm font-semibold text-slate-700">{{ result['sender_address'] or 'Memphis, TN, USA' }}</div>
+          <div class="mt-2 text-sm font-semibold text-slate-700">{{ result['current_location'] or result['sender_address'] or 'Not provided' }}</div>
         </div>
-      </div>
-
-      <div class="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
         <div class="rounded-2xl bg-slate-50 p-4">
           <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Origin</div>
-          <div class="mt-2 text-sm font-semibold text-slate-700">{{ result['sender_country'] or 'Memphis, United States' }}</div>
+          <div class="mt-2 text-sm font-semibold text-slate-700">{{ result['origin'] or result['sender_country'] or 'Not provided' }}</div>
         </div>
         <div class="rounded-2xl bg-slate-50 p-4">
           <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Destination</div>
-          <div class="mt-2 text-sm font-semibold text-slate-700">{{ result['receiver_country'] or 'Brookhaven, United States' }}</div>
-        </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Departure Date</div>
-          <div class="mt-2 text-sm font-semibold text-slate-700">{{ result['sender_date'] or '2026-09-16' }}</div>
-        </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Departure Time</div>
-          <div class="mt-2 text-sm font-semibold text-slate-700">{{ result['sender_time'] or '14:30' }}</div>
+          <div class="mt-2 text-sm font-semibold text-slate-700">{{ result['destination'] or result['receiver_address'] or result['destination_address'] or 'Not provided' }}</div>
         </div>
       </div>
+    </section>
 
-      <div class="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Arrival Date</div>
-          <div class="mt-2 text-sm font-semibold text-slate-700">{{ result['receiver_date'] or '2026-09-16' }}</div>
-        </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Arrival Time</div>
-          <div class="mt-2 text-sm font-semibold text-slate-700">{{ result['receiver_time'] or '19:15' }}</div>
-        </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Expected Delivery Date</div>
-          <div class="mt-2 text-sm font-semibold text-slate-700">{{ result['receiver_date'] or '2026-09-16' }}</div>
-        </div>
-        <div class="rounded-2xl bg-slate-50 p-4">
-          <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Expected Delivery Time</div>
-          <div class="mt-2 text-sm font-semibold text-slate-700">{{ result['receiver_time'] or '19:15' }}</div>
-        </div>
+    <section class="mt-8 rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,61,42,0.03)]">
+      <div class="mb-5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">Schedule &amp; Delivery</div>
+      <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div class="rounded-2xl bg-slate-50 p-4"><div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Departure Date</div><div class="mt-2 text-sm font-semibold text-slate-700">{{ result['departure_date'] or result['sender_date'] or 'Not provided' }}</div></div>
+        <div class="rounded-2xl bg-slate-50 p-4"><div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Departure Time</div><div class="mt-2 text-sm font-semibold text-slate-700">{{ result['departure_time'] or result['sender_time'] or 'Not provided' }}</div></div>
+        <div class="rounded-2xl bg-slate-50 p-4"><div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Arrival Date</div><div class="mt-2 text-sm font-semibold text-slate-700">{{ result['arrival_date'] or result['receiver_date'] or 'Not provided' }}</div></div>
+        <div class="rounded-2xl bg-slate-50 p-4"><div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Arrival Time</div><div class="mt-2 text-sm font-semibold text-slate-700">{{ result['arrival_time'] or result['receiver_time'] or 'Not provided' }}</div></div>
+        <div class="rounded-2xl bg-slate-50 p-4"><div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Expected Delivery Date</div><div class="mt-2 text-sm font-semibold text-slate-700">{{ result['expected_delivery_date'] or result['receiver_date'] or 'Not provided' }}</div></div>
+        <div class="rounded-2xl bg-slate-50 p-4"><div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Expected Delivery Time</div><div class="mt-2 text-sm font-semibold text-slate-700">{{ result['expected_delivery_time'] or result['receiver_time'] or 'Not provided' }}</div></div>
       </div>
     </section>
 
     <section class="mt-8 rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,61,42,0.03)]">
       <div class="mb-4 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">Comments</div>
       <div class="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-7 text-slate-700">
-        Your vehicle is in safe hands and ready to be delivered to your address. Note: insurance is required to validate the delivery.
+        {{ result['comments'] or 'Your vehicle is in safe hands and ready to be delivered to your address. Note: insurance is required to validate the delivery.' }}
       </div>
     </section>
 
@@ -382,12 +359,11 @@
         <div class="font-semibold text-slate-700">Registered &amp; Pending</div>
         <div class="mt-1">Your package has been processed and is moving through our network.</div>
         <div class="mt-2 text-xs uppercase tracking-[0.14em] text-slate-500">Memphis, TN, USA</div>
-        <div class="mt-2 text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500">3 days ago</div>
       </div>
       {% endif %}
     </section>
 
-    <section class="glass mt-8 rounded-[28px] p-6">
+    <section class="mt-8 rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,61,42,0.03)]">
       <div class="mb-4 flex items-center justify-between gap-4 flex-wrap">
         <div class="flex items-center gap-3">
           <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EEF4FF] text-[#4A90E2]">▣</div>
@@ -402,93 +378,22 @@
       <div class="rounded-2xl border border-slate-200 bg-slate-950 p-5 shadow-inner shadow-slate-800/30">
         <svg id="barcode-output" class="mx-auto h-28 w-full max-w-2xl rounded-xl"></svg>
       </div>
+    </section>
+
+    {% if history %}
+    <section class="mt-8 rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,61,42,0.03)]">
+      <div class="mb-4 flex items-center justify-between gap-4 flex-wrap">
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EEF4FF] text-[#4A90E2]">⌖</div>
+          <div>
+            <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">Route</div>
+            <div class="text-xl font-bold text-[#1A202C]">Live map</div>
+          </div>
+        </div>
+      </div>
+      <div id="map" class="rounded-[22px] border border-slate-200"></div>
     </section>
     {% endif %}
-  </main>
-
-        {% if history %}
-        <div class="relative pl-4">
-          <div class="absolute left-[10px] top-0 h-full w-px bg-[#dfeaf3]"></div>
-          {% for h in history|reverse %}
-          <div class="relative mb-5 pl-8">
-            <span class="absolute left-0 top-1 h-5 w-5 rounded-full border-4 border-white {{ 'bg-[#2D8659]' if loop.first else 'bg-[#c4d5ef]' }}"></span>
-            <div class="rounded-2xl border {{ 'border-emerald-200 bg-emerald-50/80' if loop.first else 'border-[#e6edf6] bg-white' }} p-3">
-              <div class="text-sm font-bold text-[#1A202C]">{{ h["city_name"] }}</div>
-              <div class="mt-1 text-xs text-slate-600">{{ h["status_notes"] }}</div>
-              <div class="mt-2 text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500">{{ h["updated_at"] }}</div>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-        {% else %}
-        <div class="rounded-2xl border border-dashed border-[#dfeaf3] bg-[#f8fbff] p-5 text-sm text-slate-500">No movement history yet.</div>
-        {% endif %}
-      </aside>
-    </section>
-
-    <section class="glass mt-8 rounded-[28px] p-6">
-      <div class="mb-4 flex items-center gap-3">
-        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EEF4FF] text-[#4A90E2]">ℹ️</div>
-        <div class="text-xl font-bold text-[#1A202C]">Shipping details</div>
-      </div>
-
-      <div class="grid gap-6 md:grid-cols-3">
-        <div class="rounded-2xl border border-emerald-100 bg-emerald-50/70 p-5 md:col-span-1">
-          <div class="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-[0.12em] text-emerald-700">
-            <span>Sender</span>
-          </div>
-          <dl class="space-y-2 text-sm text-slate-700">
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Name</dt><dd class="font-medium text-right">{{ result['sender_name'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Email</dt><dd class="font-medium text-right">{{ result['sender_email'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Contact</dt><dd class="font-medium text-right">{{ result['sender_contact'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Pickup</dt><dd class="font-medium text-right">{{ result['sender_pickup_date'] or 'Not set' }}{% if result['sender_pickup_time'] %} at {{ result['sender_pickup_time'] }}{% endif %}</dd></div>
-            <div class="pt-2 border-t border-emerald-200"><dt class="text-slate-500">Address</dt><dd class="mt-1 font-medium">{{ result['sender_address'] or 'Not provided' }}</dd></div>
-          </dl>
-        </div>
-
-        <div class="rounded-2xl border border-blue-100 bg-blue-50/70 p-5 md:col-span-1">
-          <div class="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-[0.12em] text-blue-700">
-            <span>Receiver</span>
-          </div>
-          <dl class="space-y-2 text-sm text-slate-700">
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Name</dt><dd class="font-medium text-right">{{ result['receiver_name'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Email</dt><dd class="font-medium text-right">{{ result['receiver_email'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Contact</dt><dd class="font-medium text-right">{{ result['receiver_contact'] or 'Not provided' }}</dd></div>
-            <div class="pt-2 border-t border-blue-200"><dt class="text-slate-500">Address</dt><dd class="mt-1 font-medium">{{ result['receiver_address'] or result['destination_address'] or 'Not provided' }}</dd></div>
-          </dl>
-        </div>
-
-        <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-5 md:col-span-1">
-          <div class="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-[0.12em] text-slate-700">
-            <span>Shipment</span>
-          </div>
-          <dl class="space-y-2 text-sm text-slate-700">
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Origin</dt><dd class="font-medium text-right">{{ result['sender_country'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Freight</dt><dd class="font-medium text-right">{{ result['sender_freight_type'] or result['receiver_freight_type'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Date</dt><dd class="font-medium text-right">{{ result['sender_date'] or result['receiver_date'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Time</dt><dd class="font-medium text-right">{{ result['sender_time'] or result['receiver_time'] or 'Not provided' }}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Destination</dt><dd class="font-medium text-right">{{ result['receiver_country'] or 'Not provided' }}</dd></div>
-          </dl>
-        </div>
-      </div>
-    </section>
-
-    <section class="glass mt-8 rounded-[28px] p-6">
-      <div class="mb-4 flex items-center justify-between gap-4 flex-wrap">
-        <div class="flex items-center gap-3">
-          <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EEF4FF] text-[#4A90E2]">▣</div>
-          <div>
-            <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">Tracking code</div>
-            <div class="text-xl font-bold text-[#1A202C]">Barcode</div>
-          </div>
-        </div>
-        <div class="font-mono text-sm font-semibold text-slate-700">{{ result['tracking_number'] }}</div>
-      </div>
-
-      <div class="rounded-2xl border border-slate-200 bg-slate-950 p-5 shadow-inner shadow-slate-800/30">
-        <svg id="barcode-output" class="mx-auto h-28 w-full max-w-2xl rounded-xl"></svg>
-      </div>
-    </section>
     {% endif %}
   </main>
 
@@ -516,7 +421,6 @@
   <script>
     const trackingCode = {{ result['tracking_number'] | tojson }};
     const barcodeOutput = document.getElementById('barcode-output');
-
     if (barcodeOutput && window.JsBarcode) {
       JsBarcode(barcodeOutput, trackingCode, {
         format: 'CODE128',
@@ -533,9 +437,9 @@
       });
     }
 
+    {% if history %}
     const history = {{ history | tojson }};
     const destinationAddr = {{ result['destination_address'] | tojson }};
-
     const map = L.map('map').setView([20, 0], 2);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
@@ -592,6 +496,7 @@
     }
 
     renderMap();
+    {% endif %}
   </script>
   {% endif %}
 </body>

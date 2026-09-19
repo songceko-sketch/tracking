@@ -132,6 +132,17 @@ def ensure_shipment_columns():
         ("receiver_date", "TEXT DEFAULT ''"),
         ("receiver_time", "TEXT DEFAULT ''"),
         ("receiver_address", "TEXT DEFAULT ''"),
+        ("shipment_description", "TEXT DEFAULT ''"),
+        ("current_location", "TEXT DEFAULT ''"),
+        ("origin", "TEXT DEFAULT ''"),
+        ("destination", "TEXT DEFAULT ''"),
+        ("departure_date", "TEXT DEFAULT ''"),
+        ("departure_time", "TEXT DEFAULT ''"),
+        ("arrival_date", "TEXT DEFAULT ''"),
+        ("arrival_time", "TEXT DEFAULT ''"),
+        ("expected_delivery_date", "TEXT DEFAULT ''"),
+        ("expected_delivery_time", "TEXT DEFAULT ''"),
+        ("comments", "TEXT DEFAULT ''"),
     ]
 
     for col_name, col_type in required:
@@ -186,6 +197,17 @@ def init_db():
                 receiver_date       TEXT   DEFAULT '',
                 receiver_time       TEXT   DEFAULT '',
                 receiver_address    TEXT   DEFAULT '',
+                shipment_description TEXT  DEFAULT '',
+                current_location    TEXT   DEFAULT '',
+                origin             TEXT   DEFAULT '',
+                destination        TEXT   DEFAULT '',
+                departure_date     TEXT   DEFAULT '',
+                departure_time     TEXT   DEFAULT '',
+                arrival_date       TEXT   DEFAULT '',
+                arrival_time       TEXT   DEFAULT '',
+                expected_delivery_date TEXT DEFAULT '',
+                expected_delivery_time TEXT DEFAULT '',
+                comments           TEXT   DEFAULT '',
                 weight_kg           REAL   DEFAULT 0,
                 height_cm           REAL   DEFAULT 0,
                 width_cm            REAL   DEFAULT 0,
@@ -246,6 +268,17 @@ def init_db():
                 receiver_date         TEXT    DEFAULT '',
                 receiver_time         TEXT    DEFAULT '',
                 receiver_address      TEXT    DEFAULT '',
+                shipment_description  TEXT    DEFAULT '',
+                current_location      TEXT    DEFAULT '',
+                origin               TEXT    DEFAULT '',
+                destination           TEXT    DEFAULT '',
+                departure_date       TEXT    DEFAULT '',
+                departure_time       TEXT    DEFAULT '',
+                arrival_date         TEXT    DEFAULT '',
+                arrival_time         TEXT    DEFAULT '',
+                expected_delivery_date TEXT   DEFAULT '',
+                expected_delivery_time TEXT   DEFAULT '',
+                comments             TEXT    DEFAULT '',
                 weight_kg             REAL    DEFAULT 0,
                 height_cm             REAL    DEFAULT 0,
                 width_cm              REAL    DEFAULT 0,
@@ -351,8 +384,9 @@ def contact():
 @app.route("/track", methods=["GET", "POST"])
 def public_track():
     result, history, error, tracking_number = None, [], None, ""
-    if request.method == "POST":
-        tracking_number = request.form.get("tracking_number", "").strip().upper()
+    requested_number = request.form.get("tracking_number", "").strip().upper() if request.method == "POST" else request.args.get("tracking_number", "").strip().upper()
+    if requested_number:
+        tracking_number = requested_number
         shipment = query("SELECT * FROM shipments WHERE tracking_number = ?",
                          (tracking_number,), one=True)
         if shipment:
@@ -363,6 +397,8 @@ def public_track():
             result = shipment
         else:
             error = f'No shipment found for "{tracking_number}". Please check and try again.'
+    elif request.method == "POST":
+        error = 'Please enter a tracking number.'
     return render_template("public_track.html",
                            result=result, history=history,
                            error=error, tracking_number=tracking_number)
@@ -429,8 +465,8 @@ def create_client():
 @login_required(role="admin")
 def create_shipment():
     client_id = request.form["client_id"]
-    destination_address = request.form.get("receiver_address", "").strip() or request.form.get("destination_address", "").strip()
-    description = request.form.get("description", "").strip()
+    destination_address = request.form.get("destination", "").strip() or request.form.get("receiver_address", "").strip() or request.form.get("destination_address", "").strip()
+    description = request.form.get("shipment_description", "").strip() or request.form.get("description", "").strip()
     package_type = request.form.get("package_type", "").strip()
     weight_kg = request.form.get("weight_kg", 0) or 0
     height_cm = request.form.get("height_cm", 0) or 0
@@ -440,22 +476,34 @@ def create_shipment():
     sender_name = request.form.get("sender_name", "").strip()
     sender_email = request.form.get("sender_email", "").strip()
     sender_contact = request.form.get("sender_contact", "").strip()
-    sender_country = request.form.get("sender_country", "").strip()
+    sender_country = request.form.get("sender_country", "").strip() or request.form.get("origin", "").strip()
     sender_freight_type = request.form.get("sender_freight_type", "").strip()
-    sender_date = request.form.get("sender_date", "").strip()
-    sender_time = request.form.get("sender_time", "").strip()
-    sender_address = request.form.get("sender_address", "").strip()
+    sender_date = request.form.get("sender_date", "").strip() or request.form.get("departure_date", "").strip()
+    sender_time = request.form.get("sender_time", "").strip() or request.form.get("departure_time", "").strip()
+    sender_address = request.form.get("sender_address", "").strip() or request.form.get("current_location", "").strip()
     sender_pickup_date = request.form.get("sender_pickup_date", "").strip()
     sender_pickup_time = request.form.get("sender_pickup_time", "").strip()
 
     receiver_name = request.form.get("receiver_name", "").strip()
     receiver_email = request.form.get("receiver_email", "").strip()
     receiver_contact = request.form.get("receiver_contact", "").strip()
-    receiver_country = request.form.get("receiver_country", "").strip()
+    receiver_country = request.form.get("receiver_country", "").strip() or request.form.get("destination", "").strip()
     receiver_freight_type = request.form.get("receiver_freight_type", "").strip()
-    receiver_date = request.form.get("receiver_date", "").strip()
-    receiver_time = request.form.get("receiver_time", "").strip()
-    receiver_address = request.form.get("receiver_address", "").strip()
+    receiver_date = request.form.get("receiver_date", "").strip() or request.form.get("arrival_date", "").strip() or request.form.get("expected_delivery_date", "").strip()
+    receiver_time = request.form.get("receiver_time", "").strip() or request.form.get("arrival_time", "").strip() or request.form.get("expected_delivery_time", "").strip()
+    receiver_address = request.form.get("receiver_address", "").strip() or request.form.get("destination", "").strip()
+
+    current_status = request.form.get("status", "").strip() or "Registered & Pending"
+    current_location = request.form.get("current_location", "").strip() or sender_address
+    origin = request.form.get("origin", "").strip() or sender_country
+    destination = request.form.get("destination", "").strip() or receiver_address or receiver_country
+    departure_date = request.form.get("departure_date", "").strip()
+    departure_time = request.form.get("departure_time", "").strip()
+    arrival_date = request.form.get("arrival_date", "").strip()
+    arrival_time = request.form.get("arrival_time", "").strip()
+    expected_delivery_date = request.form.get("expected_delivery_date", "").strip()
+    expected_delivery_time = request.form.get("expected_delivery_time", "").strip()
+    comments = request.form.get("comments", "").strip()
 
     tracking_number = "TRK-" + uuid.uuid4().hex[:8].upper()
 
@@ -476,14 +524,20 @@ def create_shipment():
             sender_date, sender_time, sender_address, sender_pickup_date, sender_pickup_time,
             receiver_name, receiver_email, receiver_contact, receiver_country, receiver_freight_type,
             receiver_date, receiver_time, receiver_address,
+            shipment_description, current_location, origin, destination,
+            departure_date, departure_time, arrival_date, arrival_time,
+            expected_delivery_date, expected_delivery_time, comments,
             weight_kg, height_cm, width_cm, length_cm,
             description, package_type, image_filename)
-           VALUES (?, ?, 'Pending', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-        (tracking_number, client_id, destination_address,
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        (tracking_number, client_id, current_status, destination_address,
          sender_name, sender_email, sender_contact, sender_country, sender_freight_type,
          sender_date, sender_time, sender_address, sender_pickup_date, sender_pickup_time,
          receiver_name, receiver_email, receiver_contact, receiver_country, receiver_freight_type,
          receiver_date, receiver_time, receiver_address,
+         description, current_location, origin, destination,
+         departure_date, departure_time, arrival_date, arrival_time,
+         expected_delivery_date, expected_delivery_time, comments,
          weight_kg, height_cm, width_cm, length_cm,
          description, package_type, image_filename),
         commit=True
