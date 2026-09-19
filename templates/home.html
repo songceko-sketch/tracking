@@ -1,275 +1,669 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NexaTrack – Real-Time Shipment Tracking</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ironclad Express delivers premium global shipping, tracking, warehousing, and customs services with enterprise-grade visibility." />
+  <title>Ironclad Express | Premium Global Logistics</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-    * { font-family: 'Inter', sans-serif; }
-    .glow { box-shadow: 0 0 40px rgba(6,182,212,0.15); }
-    .glow-btn { box-shadow: 0 0 20px rgba(6,182,212,0.4); }
-    .glass { background: rgba(255,255,255,0.04); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
-    .gradient-text { background: linear-gradient(135deg, #22d3ee, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-bg { background: radial-gradient(ellipse at 20% 50%, rgba(6,182,212,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(139,92,246,0.08) 0%, transparent 60%), #020817; }
-    .card-hover { transition: all 0.3s ease; }
-    .card-hover:hover { transform: translateY(-4px); border-color: rgba(6,182,212,0.4) !important; box-shadow: 0 20px 40px rgba(6,182,212,0.1); }
-    .grid-bg { background-image: linear-gradient(rgba(6,182,212,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(6,182,212,0.03) 1px, transparent 1px); background-size: 60px 60px; }
-    .stat-card { background: linear-gradient(135deg, rgba(6,182,212,0.1), rgba(59,130,246,0.05)); }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800&display=swap');
+
+    :root {
+      --forest: #1B5E3F;
+      --deep: #0F3D2A;
+      --emerald: #2D8659;
+      --navy: #0D3B66;
+      --sky: #4A90E2;
+      --light-blue: #F0F7FF;
+      --premium-white: #FAFBFC;
+      --light-gray: #E8EBF0;
+      --medium-gray: #95A3B3;
+      --dark-gray: #2C3E50;
+      --charcoal: #1A202C;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--premium-white);
+      color: var(--charcoal);
+    }
+
+    h1, h2, h3, h4, .brand-heading {
+      font-family: 'Poppins', 'Inter', sans-serif;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(17, 24, 39, 0.06);
+    }
+
+    .hero-shell {
+      background: linear-gradient(135deg, var(--forest) 0%, var(--navy) 100%);
+    }
+
+    .soft-panel {
+      background: linear-gradient(135deg, rgba(240,247,255,0.95) 0%, rgba(250,251,252,0.95) 100%);
+    }
+
+    .hero-grid {
+      background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    .metric-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 8px 24px rgba(13, 59, 102, 0.16);
+    }
+
+    .service-card {
+      background: linear-gradient(180deg, #fff 0%, #f8fbff 100%);
+      border: 1px solid var(--light-gray);
+      transition: all 0.28s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(45, 134, 89, 0.45);
+      box-shadow: 0 18px 32px rgba(27, 94, 63, 0.08);
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--emerald) 0%, var(--sky) 100%);
+      box-shadow: 0 16px 30px rgba(45, 134, 89, 0.28);
+      transition: all 0.22s ease;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 18px 32px rgba(45, 134, 89, 0.32);
+    }
+
+    .primary-btn:active {
+      transform: scale(0.98);
+    }
+
+    .secondary-btn {
+      border: 2px solid var(--forest);
+      background: rgba(255,255,255,0.94);
+      color: var(--forest);
+      transition: all 0.22s ease;
+    }
+
+    .secondary-btn:hover {
+      background: var(--light-blue);
+      box-shadow: 0 12px 24px rgba(27, 94, 63, 0.08);
+    }
+
+    .section-kicker {
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--forest);
+      font-weight: 700;
+      font-size: 0.72rem;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .faq-item.active {
+      border-left: 3px solid var(--forest);
+      background: rgba(27, 94, 63, 0.02);
+      padding-left: 1rem;
+    }
+
+    .nav-shadow {
+      box-shadow: 0 10px 20px rgba(15, 61, 42, 0.08);
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    @media (max-width: 767px) {
+      .nav-pill {
+        width: 100%;
+        justify-content: center;
+      }
+    }
   </style>
 </head>
-<body class="bg-[#020817] text-white">
+<body>
+  <header class="sticky top-0 z-50 border-b border-[#dfeaf3] bg-white/80 backdrop-blur-md nav-shadow">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-20 items-center justify-between gap-6">
+        <a href="/" class="flex items-center gap-3" aria-label="Ironclad Express home">
+          <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#1B5E3F] to-[#0D3B66] text-white shadow-lg shadow-emerald-900/20">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 10l9-5 9 5-9 5-9-5zm0 0v4l9 5 9-5v-4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="brand-heading text-xl font-extrabold tracking-tight text-[#0F3D2A]">Ironclad</div>
+            <div class="-mt-1 text-[10px] font-semibold uppercase tracking-[0.38em] text-slate-500">EXPRESS</div>
+          </div>
+        </a>
 
-  <!-- Navbar -->
-  <header class="fixed top-0 w-full z-50 glass border-b border-white/5">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center glow">
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0v10l-8 4m0-14L4 17m8 4V11"/>
-          </svg>
+        <nav class="hidden items-center gap-8 lg:flex text-sm font-medium text-slate-600">
+          <a href="#home" class="transition hover:text-[#1B5E3F]">Home</a>
+          <a href="#services" class="transition hover:text-[#1B5E3F]">Services</a>
+          <a href="#solutions" class="transition hover:text-[#1B5E3F]">Solutions</a>
+          <a href="/track" class="transition hover:text-[#1B5E3F]">Track Shipment</a>
+          <a href="#pricing" class="transition hover:text-[#1B5E3F]">Pricing</a>
+          <a href="#contact" class="transition hover:text-[#1B5E3F]">Support</a>
+        </nav>
+
+        <div class="hidden items-center gap-3 md:flex">
+          <button type="button" class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-[#1B5E3F] hover:text-[#1B5E3F]">English</button>
+          <a href="/login" class="rounded-full border border-[#1B5E3F] px-4 py-2 text-sm font-semibold text-[#1B5E3F] transition hover:bg-[#F0F7FF]">Sign in</a>
+          <a href="#quote" class="primary-btn rounded-full px-5 py-2.5 text-sm font-semibold text-white">Request a quote</a>
         </div>
-        <span class="text-xl font-bold tracking-tight">Nexa<span class="text-cyan-400">Track</span></span>
-      </a>
-      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
-        <a href="/track" class="hover:text-cyan-400 transition">Track</a>
-        <a href="/about" class="hover:text-cyan-400 transition">About</a>
-        <a href="/contact" class="hover:text-cyan-400 transition">Contact</a>
-        <a href="/privacy" class="hover:text-cyan-400 transition">Privacy</a>
-      </nav>
-      <a href="/login" class="text-sm font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white px-5 py-2 rounded-xl transition glow-btn">
-        Sign In →
-      </a>
+
+        <button id="mobile-menu-button" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 text-slate-700 transition hover:border-[#1B5E3F] hover:text-[#1B5E3F] lg:hidden" aria-label="Open menu" aria-expanded="false">
+          <svg id="menu-icon" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div id="mobile-menu" class="mobile-menu mt-2 rounded-[24px] border border-[#e6edf6] bg-white p-4 shadow-[0_16px_36px_rgba(15,61,42,0.06)] lg:hidden">
+        <nav class="flex flex-col gap-2 text-sm font-medium text-slate-600">
+          <a href="#home" class="rounded-xl px-3 py-2 transition hover:bg-[#F0F7FF] hover:text-[#1B5E3F]">Home</a>
+          <a href="#services" class="rounded-xl px-3 py-2 transition hover:bg-[#F0F7FF] hover:text-[#1B5E3F]">Services</a>
+          <a href="#solutions" class="rounded-xl px-3 py-2 transition hover:bg-[#F0F7FF] hover:text-[#1B5E3F]">Solutions</a>
+          <a href="/track" class="rounded-xl px-3 py-2 transition hover:bg-[#F0F7FF] hover:text-[#1B5E3F]">Track Shipment</a>
+          <a href="#pricing" class="rounded-xl px-3 py-2 transition hover:bg-[#F0F7FF] hover:text-[#1B5E3F]">Pricing</a>
+          <a href="#contact" class="rounded-xl px-3 py-2 transition hover:bg-[#F0F7FF] hover:text-[#1B5E3F]">Support</a>
+          <div class="mt-3 flex flex-col gap-2 pt-2">
+            <a href="/login" class="nav-pill inline-flex items-center justify-center rounded-full border border-[#1B5E3F] px-4 py-2.5 font-semibold text-[#1B5E3F]">Sign in</a>
+            <a href="#quote" class="nav-pill primary-btn inline-flex items-center justify-center rounded-full px-4 py-2.5 font-semibold text-white">Request a quote</a>
+          </div>
+        </nav>
+      </div>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="hero-bg grid-bg min-h-screen flex items-center pt-20">
-    <div class="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-16 items-center">
-      <div>
-        <div class="inline-flex items-center gap-2 glass text-cyan-400 text-xs font-semibold px-4 py-2 rounded-full mb-8 border border-cyan-500/20">
-          <span class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
-          Live Tracking Platform
+  <main id="home">
+    <section class="hero-shell text-white">
+      <div class="mx-auto max-w-7xl px-4 pb-16 pt-12 sm:px-6 lg:px-8 lg:pb-20 lg:pt-16">
+        <div class="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <div>
+            <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-100">
+              <span class="h-2.5 w-2.5 rounded-full bg-emerald-300 animate-pulse"></span>
+              Trusted by modern supply chains
+            </div>
+
+            <h1 class="max-w-xl text-4xl font-extrabold leading-[1.02] tracking-tight sm:text-5xl lg:text-7xl">
+              Global shipping that keeps your supply chain in motion.<br />
+              <span class="bg-gradient-to-r from-emerald-300 via-sky-200 to-white bg-clip-text text-transparent">On time, on track, on brand.</span>
+            </h1>
+
+            <p class="mt-6 max-w-xl text-base text-slate-200 sm:text-lg">
+              From pickup to final delivery, Ironclad coordinates air, sea, warehousing, and customs support with real-time visibility and a team that acts before small issues become costly delays.
+            </p>
+
+            <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+              <form action="/track" method="post" class="flex w-full max-w-xl gap-3 rounded-2xl border border-white/15 bg-white/5 p-2 backdrop-blur-sm sm:max-w-lg">
+                <div class="flex flex-1 items-center gap-3 rounded-xl bg-white/10 px-4">
+                  <svg viewBox="0 0 24 24" class="h-5 w-5 text-emerald-200" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="6"/>
+                    <path d="M20 20l-4.2-4.2" stroke-linecap="round"/>
+                  </svg>
+                  <input
+                    name="tracking_number"
+                    type="text"
+                    aria-label="Tracking number"
+                    placeholder="Enter tracking number"
+                    class="w-full border-0 bg-transparent py-3 text-sm text-white placeholder:text-slate-300 focus:outline-none"
+                  />
+                </div>
+                <button type="submit" class="primary-btn rounded-xl px-5 py-3 text-sm font-semibold text-white">Track shipment</button>
+              </form>
+            </div>
+
+            <div class="mt-8 flex flex-wrap items-center gap-4 text-sm text-slate-200">
+              <a href="#quote" class="secondary-btn inline-flex items-center justify-center rounded-full px-5 py-2.5 font-semibold">Book a shipment</a>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
+                <span class="h-2 w-2 rounded-full bg-emerald-300"></span>
+                24/7 shipment monitoring
+              </span>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div class="hero-grid relative overflow-hidden rounded-[30px] border border-white/15 bg-white/5 p-4 shadow-2xl shadow-[#0F3D2A]/25">
+              <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(74,144,226,0.3),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(45,134,89,0.38),_transparent_35%)]"></div>
+              <div class="relative rounded-[26px] border border-white/10 bg-[#0b1f1a]/70 p-5">
+                <div class="flex items-center justify-between pb-4 text-sm text-slate-200">
+                  <span class="font-medium">Shipment movement</span>
+                  <span class="rounded-full bg-emerald-500/20 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-200">Live</span>
+                </div>
+
+                <div class="rounded-2xl border border-white/10 bg-[#102d25] p-4 shadow-inner shadow-black/10">
+                  <div class="mb-4 flex items-center justify-between text-sm">
+                    <span class="text-slate-300">Tracking</span>
+                    <span class="font-mono text-emerald-200">IEL893136190-CARGO</span>
+                  </div>
+                  <div class="space-y-3">
+                    <div class="flex items-center justify-between text-sm text-slate-300">
+                      <span>Memphis, TN</span>
+                      <span>→</span>
+                      <span>New Haven, CT</span>
+                    </div>
+                    <div class="h-2.5 overflow-hidden rounded-full bg-white/10">
+                      <div class="h-full w-[72%] rounded-full bg-gradient-to-r from-emerald-400 via-sky-400 to-cyan-300"></div>
+                    </div>
+                    <div class="flex items-center justify-between text-xs uppercase tracking-[0.18em] text-slate-400">
+                      <span>Current stop</span>
+                      <span>ETA 2 days</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-5 grid grid-cols-2 gap-3 text-sm">
+                  <div class="metric-card rounded-2xl p-4">
+                    <div class="text-2xl font-extrabold text-white">40K+</div>
+                    <div class="text-slate-300">Shipments delivered</div>
+                  </div>
+                  <div class="metric-card rounded-2xl p-4">
+                    <div class="text-2xl font-extrabold text-white">150+</div>
+                    <div class="text-slate-300">Countries served</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <h1 class="text-5xl md:text-6xl font-black leading-tight mb-6 tracking-tight">
-          Track Your<br/>
-          <span class="gradient-text">Shipments</span><br/>
-          In Real Time
-        </h1>
-        <p class="text-slate-400 text-lg leading-relaxed mb-10 max-w-lg">
-          NexaTrack gives you full visibility over every package — from warehouse to doorstep — on a live interactive map.
+      </div>
+    </section>
+
+    <section class="soft-panel border-y border-[#e6edf6]">
+      <div class="mx-auto grid max-w-7xl gap-6 px-4 py-10 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
+        <div class="rounded-3xl border border-[#dfeaf3] bg-white p-6 shadow-sm">
+          <div class="text-4xl font-black text-[#1B5E3F]">40K+</div>
+          <div class="mt-2 text-sm text-slate-600">shipments managed monthly</div>
+        </div>
+        <div class="rounded-3xl border border-[#dfeaf3] bg-white p-6 shadow-sm">
+          <div class="text-4xl font-black text-[#0D3B66]">150+</div>
+          <div class="mt-2 text-sm text-slate-600">global destinations</div>
+        </div>
+        <div class="rounded-3xl border border-[#dfeaf3] bg-white p-6 shadow-sm">
+          <div class="text-4xl font-black text-[#2D8659]">99.2%</div>
+          <div class="mt-2 text-sm text-slate-600">service reliability</div>
+        </div>
+        <div class="rounded-3xl border border-[#dfeaf3] bg-white p-6 shadow-sm">
+          <div class="text-4xl font-black text-[#4A90E2]">24/7</div>
+          <div class="mt-2 text-sm text-slate-600">real-time operational support</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-3xl text-center">
+        <div class="section-kicker">What we offer</div>
+        <h2 class="mt-4 text-3xl font-extrabold tracking-tight text-[#1A202C] sm:text-4xl">Comprehensive shipping solutions</h2>
+        <p class="mt-4 text-lg text-slate-600">
+          Tailored strategies for air freight, ocean transport, warehousing, customs, and last-mile execution across every major trade route.
         </p>
-        <form action="/track" method="POST" class="flex flex-col sm:flex-row gap-3 max-w-lg">
-          <input name="tracking_number" type="text" required
-            placeholder="Enter tracking number (e.g. TRK-A1B2C3D4)"
-            class="flex-1 px-5 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500
-                   focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-sm transition"/>
-          <button type="submit"
-            class="px-7 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500
-                   text-white font-bold rounded-xl transition glow-btn text-sm whitespace-nowrap">
-            Track Now
+      </div>
+
+      <div class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <article class="service-card rounded-[28px] p-8">
+          <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EAF6EF] text-[#1B5E3F]">
+            <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M2 15l8-4 8 4-8 4-8-4zm8-4V4m8 11l2-1v-6l-2 1m-8 5v-6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-[#1A202C]">Air freight</h3>
+          <p class="mt-4 text-base leading-7 text-slate-600">Fast transit for urgent cargo, carefully coordinated across airline networks, customs clearance, and final-mile delivery.</p>
+          <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
+        </article>
+
+        <article class="service-card rounded-[28px] p-8">
+          <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EDF2FF] text-[#0D3B66]">
+            <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M3 14h15l2 3V18H3v-4zm2-5h11l3 3v2H5V9zm3-5h8l4 4H6V4z" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-[#1A202C]">Sea freight</h3>
+          <p class="mt-4 text-base leading-7 text-slate-600">Cost-effective shipping for large, heavy, or consolidated loads with FCL, LCL, and port-to-door coordination.</p>
+          <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
+        </article>
+
+        <article class="service-card rounded-[28px] p-8">
+          <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EEF8FF] text-[#4A90E2]">
+            <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M3 11h18M6 7h12l2 4H4l2-4zm-2 8h18v2H4v-2z" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-[#1A202C]">LCL & truckload</h3>
+          <p class="mt-4 text-base leading-7 text-slate-600">Flexible road freight optimization for partial and full-load transportation with scheduled last-mile precision.</p>
+          <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
+        </article>
+
+        <article class="service-card rounded-[28px] p-8">
+          <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F2F7FF] text-[#0D3B66]">
+            <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M4 20V8l8-4 8 4v12m-8-8v8m-8 0h16" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-[#1A202C]">Warehousing</h3>
+          <p class="mt-4 text-base leading-7 text-slate-600">Integrated storage, inventory control, cross-docking, and dispatch planning for short or long-term supply needs.</p>
+          <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
+        </article>
+
+        <article class="service-card rounded-[28px] p-8">
+          <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F0F8F5] text-[#1B5E3F]">
+            <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M7 5h10l3 4v10H4V9l3-4zm3 4h4m-4 4h4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-[#1A202C]">Customs brokerage</h3>
+          <p class="mt-4 text-base leading-7 text-slate-600">Specialized border compliance, declarations, inspections, and fast documentation to clear goods without delays.</p>
+          <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
+        </article>
+
+        <article class="service-card rounded-[28px] p-8">
+          <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F9F2EA] text-[#B7791F]">
+            <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3zm0 0v18m-8-9h16" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-[#1A202C]">Import services</h3>
+          <p class="mt-4 text-base leading-7 text-slate-600">End-to-end import support from origin pickup to destination release, documentation, and final delivery coordination.</p>
+          <div class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1B5E3F]">Learn more <span aria-hidden="true">→</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="solutions" class="bg-[#0F3D2A] py-20 text-white">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <div class="section-kicker text-emerald-200">Operational standards</div>
+            <h2 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Disciplined execution with risk-aware logistics management</h2>
+            <p class="mt-5 max-w-md text-lg text-emerald-50/80">
+              We combine live visibility, documentation control, and escalation playbooks to reduce surprises and keep operations moving.
+            </p>
+          </div>
+          <div class="grid gap-5 md:grid-cols-2">
+            <div class="rounded-[28px] border border-white/10 bg-white/5 p-6">
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-300">✓</div>
+              <h3 class="text-xl font-bold">Real-time tracking</h3>
+              <p class="mt-3 text-slate-200">Checkpoint-level visibility across origin, route, warehousing, and destination milestones.</p>
+            </div>
+            <div class="rounded-[28px] border border-white/10 bg-white/5 p-6">
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-500/15 text-sky-300">✓</div>
+              <h3 class="text-xl font-bold">Structured documentation</h3>
+              <p class="mt-3 text-slate-200">Validated paperwork and proactive exception handling before issues reach the customer.</p>
+            </div>
+            <div class="rounded-[28px] border border-white/10 bg-white/5 p-6">
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/15 text-amber-300">✓</div>
+              <h3 class="text-xl font-bold">Risk mitigation</h3>
+              <p class="mt-3 text-slate-200">Smart rerouting, early escalation, and contingency planning for rapidly changing conditions.</p>
+            </div>
+            <div class="rounded-[28px] border border-white/10 bg-white/5 p-6">
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-500/15 text-cyan-300">✓</div>
+              <h3 class="text-xl font-bold">Clear communication</h3>
+              <p class="mt-3 text-slate-200">Transparent updates and responsive support to keep teams aligned from booking to delivery.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="quote" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+        <div class="rounded-[30px] bg-[#F0F7FF] p-8">
+          <div class="section-kicker">Why choose us</div>
+          <h2 class="mt-4 text-3xl font-extrabold text-[#1A202C]">Built for confidence, speed, and control</h2>
+          <div class="mt-8 space-y-6">
+            <div>
+              <div class="text-4xl font-black text-[#1B5E3F]">4.9/5</div>
+              <div class="mt-2 text-slate-600">Average customer satisfaction across premium shipping programs</div>
+            </div>
+            <div>
+              <div class="text-4xl font-black text-[#0D3B66]">2,350+</div>
+              <div class="mt-2 text-slate-600">verified customer reviews and long-term enterprise accounts</div>
+            </div>
+            <div class="rounded-2xl border border-[#dfeaf3] bg-white p-5 shadow-sm">
+              <p class="text-base leading-7 text-slate-700">“Ironclad delivered our shipment three days early. Their communication and coordination were exceptional from booking to delivery.”</p>
+              <div class="mt-4 font-semibold text-[#1B5E3F]">— Sarah Chen, Beijing</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-[30px] border border-[#dfeaf3] bg-white p-6 shadow-[0_24px_60px_rgba(15,61,42,0.06)] sm:p-8">
+          <div class="section-kicker">Booking request</div>
+          <h3 class="mt-4 text-3xl font-extrabold text-[#1A202C]">Plan your next shipment</h3>
+
+          <div class="mt-8">
+            <div class="mb-8 flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2 text-sm font-semibold text-[#1B5E3F]">
+                <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#1B5E3F] text-white">1</span>
+                Sender
+              </div>
+              <div class="h-px flex-1 bg-[#dfeaf3]"></div>
+              <div class="flex items-center gap-2 text-sm font-semibold text-slate-400">
+                <span class="flex h-7 w-7 items-center justify-center rounded-full border border-slate-300 text-slate-400">2</span>
+                Receiver
+              </div>
+              <div class="h-px flex-1 bg-[#dfeaf3]"></div>
+              <div class="flex items-center gap-2 text-sm font-semibold text-slate-400">
+                <span class="flex h-7 w-7 items-center justify-center rounded-full border border-slate-300 text-slate-400">3</span>
+                Details
+              </div>
+            </div>
+
+            <form class="space-y-5">
+              <div class="grid gap-5 md:grid-cols-2">
+                <div>
+                  <label class="mb-2 block text-sm font-semibold text-[#2C3E50]">Sender name</label>
+                  <input type="text" placeholder="John Doe" class="w-full rounded-xl border border-[#e2e8f0] bg-[#FAFBFC] px-4 py-3 text-base text-slate-700 outline-none transition focus:border-[#1B5E3F] focus:ring-4 focus:ring-emerald-100" />
+                </div>
+                <div>
+                  <label class="mb-2 block text-sm font-semibold text-[#2C3E50]">Email</label>
+                  <input type="email" placeholder="john@company.com" class="w-full rounded-xl border border-[#e2e8f0] bg-[#FAFBFC] px-4 py-3 text-base text-slate-700 outline-none transition focus:border-[#1B5E3F] focus:ring-4 focus:ring-emerald-100" />
+                </div>
+              </div>
+
+              <div class="grid gap-5 md:grid-cols-2">
+                <div>
+                  <label class="mb-2 block text-sm font-semibold text-[#2C3E50]">Origin country</label>
+                  <select class="w-full rounded-xl border border-[#e2e8f0] bg-[#FAFBFC] px-4 py-3 text-base text-slate-700 outline-none transition focus:border-[#1B5E3F] focus:ring-4 focus:ring-emerald-100">
+                    <option>United States</option>
+                    <option>United Kingdom</option>
+                    <option>Germany</option>
+                    <option>United Arab Emirates</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="mb-2 block text-sm font-semibold text-[#2C3E50]">Destination country</label>
+                  <select class="w-full rounded-xl border border-[#e2e8f0] bg-[#FAFBFC] px-4 py-3 text-base text-slate-700 outline-none transition focus:border-[#1B5E3F] focus:ring-4 focus:ring-emerald-100">
+                    <option>United Kingdom</option>
+                    <option>Canada</option>
+                    <option>Australia</option>
+                    <option>Saudi Arabia</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid gap-5 md:grid-cols-2">
+                <div>
+                  <label class="mb-2 block text-sm font-semibold text-[#2C3E50]">Freight type</label>
+                  <select class="w-full rounded-xl border border-[#e2e8f0] bg-[#FAFBFC] px-4 py-3 text-base text-slate-700 outline-none transition focus:border-[#1B5E3F] focus:ring-4 focus:ring-emerald-100">
+                    <option>Air freight</option>
+                    <option>Sea freight</option>
+                    <option>LCL & truckload</option>
+                    <option>Warehousing</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="mb-2 block text-sm font-semibold text-[#2C3E50]">Pickup date</label>
+                  <input type="date" class="w-full rounded-xl border border-[#e2e8f0] bg-[#FAFBFC] px-4 py-3 text-base text-slate-700 outline-none transition focus:border-[#1B5E3F] focus:ring-4 focus:ring-emerald-100" />
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-4 pt-3 sm:flex-row sm:justify-end">
+                <button type="button" class="secondary-btn rounded-full px-6 py-3 text-sm font-semibold">Save draft</button>
+                <button type="submit" class="primary-btn rounded-full px-6 py-3 text-sm font-semibold text-white">Continue booking</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-3xl text-center">
+        <div class="section-kicker">FAQ</div>
+        <h2 class="mt-4 text-3xl font-extrabold tracking-tight text-[#1A202C] sm:text-4xl">Questions from modern shippers</h2>
+      </div>
+
+      <div class="mt-10 rounded-[30px] border border-[#e6edf6] bg-white p-3 shadow-[0_18px_40px_rgba(15,61,42,0.04)] sm:p-6">
+        <div class="faq-item active p-5">
+          <button class="faq-toggle flex w-full items-center justify-between gap-4 text-left text-lg font-semibold text-[#1A202C]" type="button">
+            <span>How long does international shipping take?</span>
+            <span class="text-2xl text-[#1B5E3F]">+</span>
           </button>
-        </form>
+          <div class="faq-content mt-4 max-w-2xl text-slate-600">
+            Delivery windows vary by route and service level, but our air freight programs typically range from 3 to 10 business days, while ocean freight averages 2 to 6 weeks depending on the lane and customs process.
+          </div>
+        </div>
+
+        <div class="faq-item p-5">
+          <button class="faq-toggle flex w-full items-center justify-between gap-4 text-left text-lg font-semibold text-[#1A202C]" type="button">
+            <span>Can I change my shipment details after booking?</span>
+            <span class="text-2xl text-[#1B5E3F]">+</span>
+          </button>
+          <div class="faq-content hidden mt-4 max-w-2xl text-slate-600">
+            Yes. We can usually adjust pickup schedules, destination notes, or handling instructions before the shipment leaves the origin point. Changes are subject to carrier acceptance and service availability.
+          </div>
+        </div>
+
+        <div class="faq-item p-5">
+          <button class="faq-toggle flex w-full items-center justify-between gap-4 text-left text-lg font-semibold text-[#1A202C]" type="button">
+            <span>Do you offer insurance?</span>
+            <span class="text-2xl text-[#1B5E3F]">+</span>
+          </button>
+          <div class="faq-content hidden mt-4 max-w-2xl text-slate-600">
+            Absolutely. We offer coverage options for standard, premium, and high-value freight, with transparent pricing and clear terms for protected shipments.
+          </div>
+        </div>
+
+        <div class="faq-item p-5">
+          <button class="faq-toggle flex w-full items-center justify-between gap-4 text-left text-lg font-semibold text-[#1A202C]" type="button">
+            <span>Can I track my shipment in real time?</span>
+            <span class="text-2xl text-[#1B5E3F]">+</span>
+          </button>
+          <div class="faq-content hidden mt-4 max-w-2xl text-slate-600">
+            Yes. Every booking includes a live tracking number and timeline updates, so you can monitor progress from pickup to final delivery without needing to contact support.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="bg-[#FAFBFC] py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-3xl text-center">
+          <div class="section-kicker">Talk to an expert</div>
+          <h2 class="mt-4 text-3xl font-extrabold tracking-tight text-[#1A202C] sm:text-4xl">Need a reliable shipping partner?</h2>
+        </div>
+        <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <div class="rounded-[28px] border border-[#e6edf6] bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+            <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#EAF6EF] text-2xl text-[#1B5E3F]">📞</div>
+            <div class="text-lg font-semibold text-[#1A202C]">Call us anytime</div>
+            <div class="mt-2 text-slate-600">+1 (718) 913-8624</div>
+          </div>
+          <div class="rounded-[28px] border border-[#e6edf6] bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+            <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#EAF6EF] text-2xl text-[#1B5E3F]">✉️</div>
+            <div class="text-lg font-semibold text-[#1A202C]">Email support</div>
+            <div class="mt-2 text-slate-600">info@ironcladexpresslogistic.com</div>
+          </div>
+          <div class="rounded-[28px] border border-[#e6edf6] bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+            <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#EAF6EF] text-2xl text-[#1B5E3F]">💬</div>
+            <div class="text-lg font-semibold text-[#1A202C]">Live chat</div>
+            <div class="mt-2 text-slate-600">Start a conversation</div>
+          </div>
+          <div class="rounded-[28px] border border-[#e6edf6] bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+            <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#EAF6EF] text-2xl text-[#1B5E3F]">🕐</div>
+            <div class="text-lg font-semibold text-[#1A202C]">Hours</div>
+            <div class="mt-2 text-slate-600">24/7/365</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-[#e6edf6] bg-white">
+    <div class="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-10 text-sm text-slate-600 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+      <div class="flex items-center gap-3">
+        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#1B5E3F] to-[#0D3B66] text-white">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 10l9-5 9 5-9 5-9-5zm0 0v4l9 5 9-5v-4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-heading text-lg font-extrabold text-[#0F3D2A]">Ironclad</div>
+          <div class="-mt-1 text-[9px] font-semibold uppercase tracking-[0.28em] text-slate-500">EXPRESS</div>
+        </div>
       </div>
 
-      <!-- Hero visual -->
-      <div class="relative hidden md:block">
-        <div class="relative rounded-2xl overflow-hidden glow">
-          <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=700&q=80&fit=crop"
-               alt="NexaTrack warehouse" class="w-full h-[480px] object-cover opacity-60"/>
-          <div class="absolute inset-0 bg-gradient-to-t from-[#020817] via-transparent to-transparent"></div>
-          <div class="absolute bottom-6 left-6 right-6">
-            <div class="glass rounded-xl p-4 border border-cyan-500/20">
-              <div class="flex items-center gap-3 mb-3">
-                <span class="w-3 h-3 bg-cyan-400 rounded-full animate-pulse"></span>
-                <span class="text-cyan-400 text-xs font-semibold uppercase tracking-wide">Live Update</span>
-              </div>
-              <p class="text-white font-bold text-sm">TRK-A1B2C3D4</p>
-              <p class="text-slate-400 text-xs mt-1">📍 Dubai, UAE → London, UK</p>
-              <div class="mt-2 h-1.5 bg-white/10 rounded-full overflow-hidden">
-                <div class="h-full w-2/3 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="flex flex-wrap items-center gap-6">
+        <a href="#services" class="transition hover:text-[#1B5E3F]">Services</a>
+        <a href="/track" class="transition hover:text-[#1B5E3F]">Track</a>
+        <a href="#quote" class="transition hover:text-[#1B5E3F]">Booking</a>
+        <a href="/contact" class="transition hover:text-[#1B5E3F]">Contact</a>
       </div>
-    </div>
-  </section>
 
-  <!-- Stats -->
-  <section class="py-16 border-y border-white/5">
-    <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6">
-      <div class="stat-card rounded-2xl p-6 text-center border border-cyan-500/10">
-        <p class="text-4xl font-black text-cyan-400 mb-1">50K+</p>
-        <p class="text-slate-400 text-sm">Shipments Delivered</p>
-      </div>
-      <div class="stat-card rounded-2xl p-6 text-center border border-blue-500/10">
-        <p class="text-4xl font-black text-blue-400 mb-1">120+</p>
-        <p class="text-slate-400 text-sm">Countries Covered</p>
-      </div>
-      <div class="stat-card rounded-2xl p-6 text-center border border-violet-500/10">
-        <p class="text-4xl font-black text-violet-400 mb-1">99.8%</p>
-        <p class="text-slate-400 text-sm">On-Time Rate</p>
-      </div>
-      <div class="stat-card rounded-2xl p-6 text-center border border-cyan-500/10">
-        <p class="text-4xl font-black text-cyan-400 mb-1">24/7</p>
-        <p class="text-slate-400 text-sm">Live Tracking</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features -->
-  <section class="py-24">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <p class="text-cyan-400 text-sm font-semibold uppercase tracking-widest mb-3">Why NexaTrack</p>
-        <h2 class="text-4xl font-black tracking-tight">Everything You Need</h2>
-        <p class="text-slate-400 mt-4 max-w-xl mx-auto">A complete logistics platform built for speed, transparency, and reliability.</p>
-      </div>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="glass rounded-2xl p-8 card-hover border border-white/5">
-          <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-6">
-            <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
-            </svg>
-          </div>
-          <h3 class="font-bold text-white text-lg mb-3">Live Map Tracking</h3>
-          <p class="text-slate-400 text-sm leading-relaxed">Watch your shipment move in real time on an interactive OpenStreetMap with precise location pins.</p>
-        </div>
-        <div class="glass rounded-2xl p-8 card-hover border border-white/5">
-          <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-6">
-            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-            </svg>
-          </div>
-          <h3 class="font-bold text-white text-lg mb-3">Full History Timeline</h3>
-          <p class="text-slate-400 text-sm leading-relaxed">Every stop and status update recorded in a clean chronological timeline — nothing missed.</p>
-        </div>
-        <div class="glass rounded-2xl p-8 card-hover border border-white/5">
-          <div class="w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mb-6">
-            <svg class="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-            </svg>
-          </div>
-          <h3 class="font-bold text-white text-lg mb-3">Secure & Private</h3>
-          <p class="text-slate-400 text-sm leading-relaxed">Role-based access ensures each client only sees their own shipments. Data stays completely private.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Image split section -->
-  <section class="py-24 border-t border-white/5">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="relative rounded-2xl overflow-hidden group">
-          <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=800&q=80&fit=crop"
-               alt="NexaTrack operations" class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500 opacity-70"/>
-          <div class="absolute inset-0 bg-gradient-to-t from-[#020817] via-[#020817]/40 to-transparent flex items-end p-6">
-            <div>
-              <span class="text-cyan-400 text-xs font-semibold uppercase tracking-widest">Operations Hub</span>
-              <h3 class="text-white font-bold text-xl mt-1">Our Control Center</h3>
-              <p class="text-slate-400 text-sm mt-1">Real-time monitoring of every shipment worldwide.</p>
-            </div>
-          </div>
-          <div class="absolute top-4 right-4 glass text-cyan-400 text-xs font-bold px-3 py-1.5 rounded-lg border border-cyan-500/20">
-            NEXATRACK
-          </div>
-        </div>
-        <div class="relative rounded-2xl overflow-hidden group">
-          <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&q=80&fit=crop"
-               alt="NexaTrack transit" class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500 opacity-70"/>
-          <div class="absolute inset-0 bg-gradient-to-t from-[#020817] via-[#020817]/40 to-transparent flex items-end p-6">
-            <div>
-              <div class="flex items-center gap-2 mb-1">
-                <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-                <span class="text-emerald-400 text-xs font-semibold uppercase tracking-widest">In Transit</span>
-              </div>
-              <h3 class="text-white font-bold text-xl">Shipments on the Move</h3>
-              <p class="text-slate-400 text-sm mt-1">Hundreds of packages processed and dispatched daily.</p>
-            </div>
-          </div>
-          <div class="absolute top-4 right-4 glass text-emerald-400 text-xs font-bold px-3 py-1.5 rounded-lg border border-emerald-500/20">
-            LIVE
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- How it works -->
-  <section class="py-24 border-t border-white/5">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-      <p class="text-cyan-400 text-sm font-semibold uppercase tracking-widest mb-3">Simple Process</p>
-      <h2 class="text-4xl font-black tracking-tight mb-16">How It Works</h2>
-      <div class="grid md:grid-cols-3 gap-10">
-        <div class="flex flex-col items-center">
-          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-xl font-black mb-5 glow-btn">1</div>
-          <h4 class="font-bold text-white mb-2">Get Your Tracking ID</h4>
-          <p class="text-slate-400 text-sm">NexaTrack assigns a unique tracking number to your shipment.</p>
-        </div>
-        <div class="flex flex-col items-center">
-          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-xl font-black mb-5" style="box-shadow:0 0 20px rgba(139,92,246,0.4)">2</div>
-          <h4 class="font-bold text-white mb-2">Enter It Here</h4>
-          <p class="text-slate-400 text-sm">Type your tracking number into the search box on our Track page.</p>
-        </div>
-        <div class="flex flex-col items-center">
-          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-pink-600 flex items-center justify-center text-xl font-black mb-5" style="box-shadow:0 0 20px rgba(168,85,247,0.4)">3</div>
-          <h4 class="font-bold text-white mb-2">See It Live on the Map</h4>
-          <p class="text-slate-400 text-sm">Your shipment's location appears instantly on an interactive map.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="py-24 border-t border-white/5">
-    <div class="max-w-3xl mx-auto px-6 text-center">
-      <div class="glass rounded-3xl p-12 border border-cyan-500/10 glow">
-        <h2 class="text-4xl font-black mb-4 tracking-tight">Ready to track?</h2>
-        <p class="text-slate-400 mb-8">No account needed. Just enter your tracking number and go.</p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="/track" class="inline-block bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold px-8 py-3.5 rounded-xl transition glow-btn text-sm">
-            Track a Shipment →
-          </a>
-          <a href="/contact" class="inline-block glass hover:border-cyan-500/30 text-white font-bold px-8 py-3.5 rounded-xl transition text-sm border border-white/10">
-            Contact Us
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="border-t border-white/5 py-12">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
-            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0v10l-8 4m0-14L4 17m8 4V11"/>
-            </svg>
-          </div>
-          <span class="font-bold text-lg">Nexa<span class="text-cyan-400">Track</span></span>
-        </div>
-        <div class="flex flex-col md:flex-row items-center gap-4 text-xs text-slate-400">
-          <span>📞 +1 (347) 534-5034</span>
-          <span>✉ info@nexatrackers.com</span>
-        </div>
-        <div class="flex gap-8 text-sm text-slate-400">
-          <a href="/track" class="hover:text-cyan-400 transition">Track</a>
-          <a href="/about" class="hover:text-cyan-400 transition">About</a>
-          <a href="/contact" class="hover:text-cyan-400 transition">Contact</a>
-          <a href="/privacy" class="hover:text-cyan-400 transition">Privacy</a>
-          <a href="/login" class="hover:text-cyan-400 transition">Login</a>
-        </div>
-      </div>
-      <div class="border-t border-white/5 pt-6 text-center text-xs text-slate-600">
-        © 2025 NexaTrack. All rights reserved.
-      </div>
+      <div class="text-slate-500">© 2026 Ironclad Express</div>
     </div>
   </footer>
 
+  <script>
+    const faqToggles = document.querySelectorAll('.faq-toggle');
+    faqToggles.forEach((toggle) => {
+      toggle.addEventListener('click', () => {
+        const item = toggle.closest('.faq-item');
+        const content = item.querySelector('.faq-content');
+        const isOpen = item.classList.contains('active');
+
+        document.querySelectorAll('.faq-item').forEach((faq) => {
+          faq.classList.remove('active');
+          faq.querySelector('.faq-content').classList.add('hidden');
+          faq.querySelector('.faq-toggle span:last-child').textContent = '+';
+        });
+
+        if (!isOpen) {
+          item.classList.add('active');
+          content.classList.remove('hidden');
+          toggle.querySelector('span:last-child').textContent = '−';
+        }
+      });
+    });
+
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+
+    if (menuButton && mobileMenu) {
+      menuButton.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('open');
+        menuButton.setAttribute('aria-expanded', String(isOpen));
+        menuIcon.innerHTML = isOpen
+          ? '<path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/>'
+          : '<path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>';
+      });
+    }
+  </script>
 </body>
 </html>
