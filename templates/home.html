@@ -135,6 +135,20 @@
       object-fit: cover;
       border-radius: 1.1rem;
       display: block;
+      filter: saturate(0.92) contrast(1.05);
+      background: #e8eef5;
+    }
+
+    .showcase-panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+
+    .mini-stat {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
     }
 
     @media (max-width: 767px) {
@@ -251,11 +265,16 @@
             <div class="hero-grid relative overflow-hidden rounded-[30px] border border-white/15 bg-white/5 p-4 shadow-2xl shadow-[#0F3D2A]/25">
               <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(74,144,226,0.3),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(45,134,89,0.38),_transparent_35%)]"></div>
               <div class="relative rounded-[26px] border border-white/10 bg-[#0b1f1a]/70 p-5">
-                <img
-                  src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80"
-                  alt="Shipping containers in a cargo port"
-                  class="h-64 w-full rounded-2xl border border-white/10 object-cover shadow-lg shadow-black/20"
-                />
+                <div class="showcase-panel overflow-hidden rounded-2xl border border-white/10 shadow-lg shadow-black/20">
+                  <img
+                    src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=70&fm=jpg"
+                    alt="Shipping containers in a cargo port"
+                    class="h-64 w-full object-cover"
+                    loading="eager"
+                    decoding="async"
+                    fetchpriority="high"
+                  />
+                </div>
 
                 <div class="mt-5 flex items-center justify-between pb-3 text-sm text-slate-200">
                   <span class="font-medium">Shipment movement</span>
@@ -284,11 +303,11 @@
                 </div>
 
                 <div class="mt-5 grid grid-cols-2 gap-3 text-sm">
-                  <div class="metric-card rounded-2xl p-4">
+                  <div class="mini-stat rounded-2xl p-4">
                     <div class="text-2xl font-extrabold text-white">40K+</div>
                     <div class="text-slate-300">Shipments delivered</div>
                   </div>
-                  <div class="metric-card rounded-2xl p-4">
+                  <div class="mini-stat rounded-2xl p-4">
                     <div class="text-2xl font-extrabold text-white">150+</div>
                     <div class="text-slate-300">Countries served</div>
                   </div>
@@ -332,7 +351,7 @@
 
       <div class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         <article class="service-card rounded-[28px] p-4">
-          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80" alt="Cargo plane in flight" class="feature-photo mb-5" />
+          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=70&fm=jpg" alt="Cargo plane in flight" class="feature-photo mb-5" loading="lazy" decoding="async" />
           <div class="px-4 pb-4">
             <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EAF6EF] text-[#1B5E3F]">
               <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -346,7 +365,7 @@
         </article>
 
         <article class="service-card rounded-[28px] p-4">
-          <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=900&q=80" alt="Container cargo ship" class="feature-photo mb-5" />
+          <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=900&q=70&fm=jpg" alt="Container cargo ship" class="feature-photo mb-5" loading="lazy" decoding="async" />
           <div class="px-4 pb-4">
             <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EDF2FF] text-[#0D3B66]">
               <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -360,7 +379,7 @@
         </article>
 
         <article class="service-card rounded-[28px] p-4">
-          <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=900&q=80" alt="Trucks and freight logistics" class="feature-photo mb-5" />
+          <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=900&q=70&fm=jpg" alt="Trucks and freight logistics" class="feature-photo mb-5" loading="lazy" decoding="async" />
           <div class="px-4 pb-4">
             <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EEF8FF] text-[#4A90E2]">
               <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -374,7 +393,7 @@
         </article>
 
         <article class="service-card rounded-[28px] p-4">
-          <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=900&q=80" alt="Modern warehouse and cargo distribution" class="feature-photo mb-5" />
+          <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=900&q=70&fm=jpg" alt="Modern warehouse and cargo distribution" class="feature-photo mb-5" loading="lazy" decoding="async" />
           <div class="px-4 pb-4">
             <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F2F7FF] text-[#0D3B66]">
               <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -388,7 +407,7 @@
         </article>
 
         <article class="service-card rounded-[28px] p-4">
-          <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=900&q=80" alt="Customs and import paperwork" class="feature-photo mb-5" />
+          <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=900&q=70&fm=jpg" alt="Customs and import paperwork" class="feature-photo mb-5" loading="lazy" decoding="async" />
           <div class="px-4 pb-4">
             <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F0F8F5] text-[#1B5E3F]">
               <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -402,7 +421,7 @@
         </article>
 
         <article class="service-card rounded-[28px] p-4">
-          <img src="https://images.unsplash.com/photo-1598257006626-48b0c252070d?auto=format&fit=crop&w=900&q=80" alt="Import cargo at the port" class="feature-photo mb-5" />
+          <img src="https://images.unsplash.com/photo-1598257006626-48b0c252070d?auto=format&fit=crop&w=900&q=70&fm=jpg" alt="Import cargo at the port" class="feature-photo mb-5" loading="lazy" decoding="async" />
           <div class="px-4 pb-4">
             <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F9F2EA] text-[#B7791F]">
               <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.8">

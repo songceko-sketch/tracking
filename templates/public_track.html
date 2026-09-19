@@ -100,6 +100,18 @@
       background: rgba(16, 185, 129, 0.12);
       color: #047857;
     }
+
+    .premium-stat {
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(240,247,255,0.9));
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: 0 16px 30px rgba(15, 61, 42, 0.05);
+    }
+
+    .journey-panel {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      box-shadow: 0 18px 40px rgba(15, 61, 42, 0.04);
+    }
   </style>
 </head>
 <body class="min-h-screen">
@@ -169,17 +181,17 @@
         </div>
 
         <div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-          <div class="tracking-card rounded-[24px] p-5">
+          <div class="premium-stat rounded-[24px] p-5">
             <div class="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">Status</div>
             <div class="mt-3 text-3xl font-black text-[#1B5E3F]">99.2%</div>
             <div class="mt-1 text-sm text-slate-600">on-time deliveries</div>
           </div>
-          <div class="tracking-card rounded-[24px] p-5">
+          <div class="premium-stat rounded-[24px] p-5">
             <div class="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">Coverage</div>
             <div class="mt-3 text-3xl font-black text-[#0D3B66]">150+</div>
             <div class="mt-1 text-sm text-slate-600">countries served</div>
           </div>
-          <div class="tracking-card rounded-[24px] p-5">
+          <div class="premium-stat rounded-[24px] p-5">
             <div class="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">Support</div>
             <div class="mt-3 text-3xl font-black text-[#4A90E2]">24/7</div>
             <div class="mt-1 text-sm text-slate-600">dispatch monitoring</div>
@@ -190,7 +202,7 @@
 
     {% if result %}
     <section class="grid gap-6 lg:grid-cols-[0.9fr_1.35fr_0.8fr]">
-      <aside class="glass rounded-[28px] p-6">
+      <aside class="journey-panel rounded-[28px] p-6">
         <div class="mb-6 flex items-center gap-3">
           <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EAF6EF] text-[#1B5E3F] text-xl">✦</div>
           <div>
@@ -229,7 +241,7 @@
         </div>
       </aside>
 
-      <section class="glass rounded-[28px] p-4 sm:p-5">
+      <section class="journey-panel rounded-[28px] p-4 sm:p-5">
         <div class="mb-4 flex items-center justify-between px-2">
           <div>
             <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">Route map</div>
@@ -240,7 +252,7 @@
         <div id="map" aria-label="Tracking map"></div>
       </section>
 
-      <aside class="glass rounded-[28px] p-5">
+      <aside class="journey-panel rounded-[28px] p-5">
         <div class="mb-5 flex items-center gap-3">
           <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EEF4FF] text-[#4A90E2]">⏱</div>
           <div class="text-lg font-bold text-[#1A202C]">Shipment journey</div>
