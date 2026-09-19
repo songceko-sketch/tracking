@@ -97,6 +97,53 @@ def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXT
 
 
+def ensure_shipment_columns():
+    conn = get_db()
+    cur = conn.cursor()
+    db_url = os.environ.get("DATABASE_URL", "")
+
+    columns = []
+    if db_url:
+        cur.execute("""
+            SELECT column_name
+            FROM information_schema.columns
+            WHERE table_name = 'shipments'
+        """)
+        columns = [row[0] for row in cur.fetchall()]
+    else:
+        columns = [row[1] for row in cur.execute("PRAGMA table_info(shipments)").fetchall()]
+
+    required = [
+        ("sender_name", "TEXT DEFAULT ''"),
+        ("sender_email", "TEXT DEFAULT ''"),
+        ("sender_contact", "TEXT DEFAULT ''"),
+        ("sender_country", "TEXT DEFAULT ''"),
+        ("sender_freight_type", "TEXT DEFAULT ''"),
+        ("sender_date", "TEXT DEFAULT ''"),
+        ("sender_time", "TEXT DEFAULT ''"),
+        ("sender_address", "TEXT DEFAULT ''"),
+        ("sender_pickup_date", "TEXT DEFAULT ''"),
+        ("sender_pickup_time", "TEXT DEFAULT ''"),
+        ("receiver_name", "TEXT DEFAULT ''"),
+        ("receiver_email", "TEXT DEFAULT ''"),
+        ("receiver_contact", "TEXT DEFAULT ''"),
+        ("receiver_country", "TEXT DEFAULT ''"),
+        ("receiver_freight_type", "TEXT DEFAULT ''"),
+        ("receiver_date", "TEXT DEFAULT ''"),
+        ("receiver_time", "TEXT DEFAULT ''"),
+        ("receiver_address", "TEXT DEFAULT ''"),
+    ]
+
+    for col_name, col_type in required:
+        if col_name not in columns:
+            if db_url:
+                cur.execute(f"ALTER TABLE shipments ADD COLUMN {col_name} {col_type}")
+            else:
+                cur.execute(f"ALTER TABLE shipments ADD COLUMN {col_name} {col_type}")
+    conn.commit()
+    conn.close()
+
+
 # ── DB init (runs on every cold start, safe due to IF NOT EXISTS) ─────────────
 def init_db():
     db_url = os.environ.get("DATABASE_URL", "")
@@ -229,6 +276,7 @@ def init_db():
 
 try:
     init_db()
+    ensure_shipment_columns()
 except Exception as e:
     print(f"[DB INIT ERROR] {e}")
 
