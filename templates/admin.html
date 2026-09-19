@@ -86,9 +86,8 @@
           Create Shipment
         </h2>
 
-        <form method="POST" action="/admin/create_shipment" enctype="multipart/form-data" class="space-y-3">
+        <form method="POST" action="/admin/create_shipment" enctype="multipart/form-data" class="space-y-4">
 
-          <!-- Client -->
           <div>
             <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Assign to Client</label>
             <select name="client_id" required
@@ -100,14 +99,124 @@
             </select>
           </div>
 
-          <!-- Destination -->
-          <div>
-            <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Destination Address</label>
-            <input name="destination_address" type="text" required placeholder="e.g. 123 Main St, New York, USA"
-              class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
+          <div class="rounded-xl border border-emerald-100 bg-emerald-50 p-3">
+            <p class="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">Sender information</p>
           </div>
 
-          <!-- Package Type & Description -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Sender name</label>
+              <input name="sender_name" type="text" required placeholder="John Carter"
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Sender email</label>
+              <input name="sender_email" type="email" required placeholder="john@company.com"
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Sender contact</label>
+              <input name="sender_contact" type="text" required placeholder="+1 (555) 987-1132"
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Origin country</label>
+              <input name="sender_country" type="text" required placeholder="United States"
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Freight type</label>
+              <select name="sender_freight_type" required
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 bg-white">
+                <option value="">Select freight type</option>
+                <option>Air freight</option>
+                <option>Sea freight</option>
+                <option>Ground transport</option>
+                <option>Warehousing</option>
+                <option>Customs clearance</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Shipment date</label>
+              <input name="sender_date" type="date" required
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Shipment time</label>
+              <input name="sender_time" type="time" required
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Pickup date</label>
+              <input name="sender_pickup_date" type="date"
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Pickup time</label>
+              <input name="sender_pickup_time" type="time"
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"/>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Sender address</label>
+              <textarea name="sender_address" rows="2" required placeholder="123 Harbor Lane, Memphis, TN, USA"
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 resize-none"></textarea>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-blue-100 bg-blue-50 p-3">
+            <p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-700">Receiver information</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Receiver name</label>
+              <input name="receiver_name" type="text" required placeholder="Emma Brooks"
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Receiver email</label>
+              <input name="receiver_email" type="email" required placeholder="emma@client.com"
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Receiver contact</label>
+              <input name="receiver_contact" type="text" required placeholder="+44 20 7946 0958"
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Destination country</label>
+              <input name="receiver_country" type="text" required placeholder="United Kingdom"
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Freight type</label>
+              <select name="receiver_freight_type" required
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white">
+                <option value="">Select freight type</option>
+                <option>Air freight</option>
+                <option>Sea freight</option>
+                <option>Ground transport</option>
+                <option>Warehousing</option>
+                <option>Customs clearance</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Shipment date</label>
+              <input name="receiver_date" type="date" required
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Shipment time</label>
+              <input name="receiver_time" type="time" required
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Receiver address</label>
+              <textarea name="receiver_address" rows="2" required placeholder="88 Dock Street, London, UK"
+                class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
+            </div>
+          </div>
+
           <div>
             <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Package Type</label>
             <select name="package_type"
@@ -130,7 +239,6 @@
               class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 resize-none"></textarea>
           </div>
 
-          <!-- Dimensions & Weight -->
           <div>
             <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Weight &amp; Dimensions</label>
             <div class="grid grid-cols-2 gap-2">
@@ -157,7 +265,6 @@
             </div>
           </div>
 
-          <!-- Image Upload -->
           <div>
             <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Package Image</label>
             <div id="drop-zone"

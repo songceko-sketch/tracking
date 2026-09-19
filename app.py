@@ -121,6 +121,24 @@ def init_db():
                 client_id           INT    NOT NULL REFERENCES users(id),
                 current_status      TEXT   NOT NULL DEFAULT 'Pending',
                 destination_address TEXT   NOT NULL DEFAULT '',
+                sender_name         TEXT   DEFAULT '',
+                sender_email        TEXT   DEFAULT '',
+                sender_contact      TEXT   DEFAULT '',
+                sender_country      TEXT   DEFAULT '',
+                sender_freight_type TEXT   DEFAULT '',
+                sender_date         TEXT   DEFAULT '',
+                sender_time         TEXT   DEFAULT '',
+                sender_address      TEXT   DEFAULT '',
+                sender_pickup_date  TEXT   DEFAULT '',
+                sender_pickup_time  TEXT   DEFAULT '',
+                receiver_name       TEXT   DEFAULT '',
+                receiver_email      TEXT   DEFAULT '',
+                receiver_contact    TEXT   DEFAULT '',
+                receiver_country    TEXT   DEFAULT '',
+                receiver_freight_type TEXT  DEFAULT '',
+                receiver_date       TEXT   DEFAULT '',
+                receiver_time       TEXT   DEFAULT '',
+                receiver_address    TEXT   DEFAULT '',
                 weight_kg           REAL   DEFAULT 0,
                 height_cm           REAL   DEFAULT 0,
                 width_cm            REAL   DEFAULT 0,
@@ -158,19 +176,37 @@ def init_db():
                 role          TEXT    NOT NULL CHECK(role IN ('admin','client'))
             );
             CREATE TABLE IF NOT EXISTS shipments (
-                id                  INTEGER PRIMARY KEY AUTOINCREMENT,
-                tracking_number     TEXT    NOT NULL UNIQUE,
-                client_id           INTEGER NOT NULL REFERENCES users(id),
-                current_status      TEXT    NOT NULL DEFAULT 'Pending',
-                destination_address TEXT    NOT NULL DEFAULT '',
-                weight_kg           REAL    DEFAULT 0,
-                height_cm           REAL    DEFAULT 0,
-                width_cm            REAL    DEFAULT 0,
-                length_cm           REAL    DEFAULT 0,
-                description         TEXT    DEFAULT '',
-                package_type        TEXT    DEFAULT '',
-                image_filename      TEXT    DEFAULT '',
-                created_at          DATETIME DEFAULT (datetime('now'))
+                id                    INTEGER PRIMARY KEY AUTOINCREMENT,
+                tracking_number       TEXT    NOT NULL UNIQUE,
+                client_id             INTEGER NOT NULL REFERENCES users(id),
+                current_status        TEXT    NOT NULL DEFAULT 'Pending',
+                destination_address   TEXT    NOT NULL DEFAULT '',
+                sender_name           TEXT    DEFAULT '',
+                sender_email          TEXT    DEFAULT '',
+                sender_contact        TEXT    DEFAULT '',
+                sender_country        TEXT    DEFAULT '',
+                sender_freight_type   TEXT    DEFAULT '',
+                sender_date           TEXT    DEFAULT '',
+                sender_time           TEXT    DEFAULT '',
+                sender_address        TEXT    DEFAULT '',
+                sender_pickup_date    TEXT    DEFAULT '',
+                sender_pickup_time    TEXT    DEFAULT '',
+                receiver_name         TEXT    DEFAULT '',
+                receiver_email        TEXT    DEFAULT '',
+                receiver_contact      TEXT    DEFAULT '',
+                receiver_country      TEXT    DEFAULT '',
+                receiver_freight_type TEXT    DEFAULT '',
+                receiver_date         TEXT    DEFAULT '',
+                receiver_time         TEXT    DEFAULT '',
+                receiver_address      TEXT    DEFAULT '',
+                weight_kg             REAL    DEFAULT 0,
+                height_cm             REAL    DEFAULT 0,
+                width_cm              REAL    DEFAULT 0,
+                length_cm             REAL    DEFAULT 0,
+                description           TEXT    DEFAULT '',
+                package_type          TEXT    DEFAULT '',
+                image_filename        TEXT    DEFAULT '',
+                created_at            DATETIME DEFAULT (datetime('now'))
             );
             CREATE TABLE IF NOT EXISTS shipment_history (
                 id           INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -344,15 +380,36 @@ def create_client():
 @app.route("/admin/create_shipment", methods=["POST"])
 @login_required(role="admin")
 def create_shipment():
-    client_id           = request.form["client_id"]
-    destination_address = request.form["destination_address"].strip()
-    description         = request.form.get("description", "").strip()
-    package_type        = request.form.get("package_type", "").strip()
-    weight_kg           = request.form.get("weight_kg", 0) or 0
-    height_cm           = request.form.get("height_cm", 0) or 0
-    width_cm            = request.form.get("width_cm",  0) or 0
-    length_cm           = request.form.get("length_cm", 0) or 0
-    tracking_number     = "TRK-" + uuid.uuid4().hex[:8].upper()
+    client_id = request.form["client_id"]
+    destination_address = request.form.get("receiver_address", "").strip() or request.form.get("destination_address", "").strip()
+    description = request.form.get("description", "").strip()
+    package_type = request.form.get("package_type", "").strip()
+    weight_kg = request.form.get("weight_kg", 0) or 0
+    height_cm = request.form.get("height_cm", 0) or 0
+    width_cm = request.form.get("width_cm", 0) or 0
+    length_cm = request.form.get("length_cm", 0) or 0
+
+    sender_name = request.form.get("sender_name", "").strip()
+    sender_email = request.form.get("sender_email", "").strip()
+    sender_contact = request.form.get("sender_contact", "").strip()
+    sender_country = request.form.get("sender_country", "").strip()
+    sender_freight_type = request.form.get("sender_freight_type", "").strip()
+    sender_date = request.form.get("sender_date", "").strip()
+    sender_time = request.form.get("sender_time", "").strip()
+    sender_address = request.form.get("sender_address", "").strip()
+    sender_pickup_date = request.form.get("sender_pickup_date", "").strip()
+    sender_pickup_time = request.form.get("sender_pickup_time", "").strip()
+
+    receiver_name = request.form.get("receiver_name", "").strip()
+    receiver_email = request.form.get("receiver_email", "").strip()
+    receiver_contact = request.form.get("receiver_contact", "").strip()
+    receiver_country = request.form.get("receiver_country", "").strip()
+    receiver_freight_type = request.form.get("receiver_freight_type", "").strip()
+    receiver_date = request.form.get("receiver_date", "").strip()
+    receiver_time = request.form.get("receiver_time", "").strip()
+    receiver_address = request.form.get("receiver_address", "").strip()
+
+    tracking_number = "TRK-" + uuid.uuid4().hex[:8].upper()
 
     image_filename = ""
     file = request.files.get("package_image")
@@ -367,10 +424,18 @@ def create_shipment():
     query(
         """INSERT INTO shipments
            (tracking_number, client_id, current_status, destination_address,
+            sender_name, sender_email, sender_contact, sender_country, sender_freight_type,
+            sender_date, sender_time, sender_address, sender_pickup_date, sender_pickup_time,
+            receiver_name, receiver_email, receiver_contact, receiver_country, receiver_freight_type,
+            receiver_date, receiver_time, receiver_address,
             weight_kg, height_cm, width_cm, length_cm,
             description, package_type, image_filename)
-           VALUES (?, ?, 'Pending', ?, ?, ?, ?, ?, ?, ?, ?)""",
+           VALUES (?, ?, 'Pending', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         (tracking_number, client_id, destination_address,
+         sender_name, sender_email, sender_contact, sender_country, sender_freight_type,
+         sender_date, sender_time, sender_address, sender_pickup_date, sender_pickup_time,
+         receiver_name, receiver_email, receiver_contact, receiver_country, receiver_freight_type,
+         receiver_date, receiver_time, receiver_address,
          weight_kg, height_cm, width_cm, length_cm,
          description, package_type, image_filename),
         commit=True
