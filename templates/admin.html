@@ -8,7 +8,7 @@
 </head>
 <body class="min-h-screen bg-[radial-gradient(circle_at_top,_#f8fafc_0%,_#eef6ff_35%,_#edf7f3_100%)] text-slate-800">
 
-  <nav class="border-b border-slate-200/80 bg-white/80 backdrop-blur-xl">
+  <nav class="border-b border-slate-200/80 bg-white/90 backdrop-blur-xl">
     <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
       <div class="flex items-center gap-3">
         <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-[#1B5E3F] to-[#0D3B66] text-lg font-black text-white">N</div>
@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="flex items-center gap-4">
-        <span class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700">👤 {{ session.username }}</span>
+        <span class="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">👤 {{ session.username }}</span>
         <a href="/logout" class="rounded-full border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 transition hover:bg-red-100">Logout</a>
       </div>
     </div>
@@ -56,7 +56,7 @@
 
       <div class="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_20px_50px_rgba(15,61,42,0.05)]">
         <h2 class="mb-5 flex items-center gap-3 text-lg font-bold text-slate-900">
-          <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-100 text-base text-blue-700">👥</span>
+          <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-100 text-base text-emerald-700">👥</span>
           Manage Clients
         </h2>
 
@@ -68,7 +68,7 @@
           <input name="password" type="password" required placeholder="Password"
             class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
           <button type="submit"
-            class="w-full rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 px-4 py-2.5 text-sm font-semibold text-white shadow-[0_12px_25px_rgba(37,99,235,0.25)] transition hover:translate-y-[-1px]">
+            class="w-full rounded-xl bg-gradient-to-r from-[#1B5E3F] to-[#0D3B66] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_12px_25px_rgba(27,94,63,0.25)] transition hover:translate-y-[-1px]">
             + Create Client
           </button>
         </form>
@@ -83,7 +83,7 @@
                     <p class="text-sm font-semibold text-slate-800">{{ c.username }}</p>
                     <p class="text-xs text-slate-500">{{ c.email }}</p>
                   </div>
-                  <span class="rounded-full bg-blue-100 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-blue-700">ID {{ c.id }}</span>
+                  <span class="rounded-full bg-emerald-100 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-emerald-700">ID {{ c.id }}</span>
                 </li>
               {% endfor %}
             </ul>

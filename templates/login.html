@@ -8,21 +8,34 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
     * { font-family: 'Inter', sans-serif; }
-    .glass { background: rgba(255,255,255,0.04); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
-    .glass-input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; }
-    .glass-input:focus { outline: none; border-color: rgba(6,182,212,0.5); box-shadow: 0 0 0 3px rgba(6,182,212,0.1); }
-    .glass-input::placeholder { color: #475569; }
-    .glow { box-shadow: 0 0 40px rgba(6,182,212,0.2); }
-    .glow-btn { box-shadow: 0 0 20px rgba(6,182,212,0.4); }
+    body {
+      background:
+        radial-gradient(circle at top, rgba(45, 134, 89, 0.18), transparent 32%),
+        linear-gradient(135deg, #f4f9f6 0%, #edf5fb 100%);
+    }
+    .panel {
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      box-shadow: 0 28px 60px rgba(15, 61, 42, 0.12);
+    }
+    .input-shell {
+      background: rgba(248, 250, 252, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      color: #0f172a;
+    }
+    .input-shell:focus {
+      outline: none;
+      border-color: rgba(29, 103, 72, 0.45);
+      box-shadow: 0 0 0 3px rgba(45, 134, 89, 0.12);
+    }
+    .input-shell::placeholder { color: #64748b; }
   </style>
 </head>
-<body class="min-h-screen bg-[#020817] flex items-center justify-center px-4" style="background: radial-gradient(ellipse at 50% 0%, rgba(6,182,212,0.1) 0%, transparent 60%), #020817;">
-
+<body class="min-h-screen flex items-center justify-center px-4 py-10">
   <div class="w-full max-w-md">
-
-    <!-- Back to home -->
     <div class="mb-6">
-      <a href="/" class="inline-flex items-center gap-1.5 text-slate-400 hover:text-white text-sm transition">
+      <a href="/" class="inline-flex items-center gap-1.5 text-slate-600 hover:text-[#1B5E3F] text-sm transition">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
@@ -30,25 +43,23 @@
       </a>
     </div>
 
-    <!-- Brand -->
     <div class="text-center mb-8">
-      <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl mb-4 shadow-lg shadow-blue-600/30">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4 shadow-lg shadow-emerald-500/20 bg-gradient-to-br from-[#1B5E3F] to-[#0D3B66]">
         <svg class="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M20 7l-8-4-8 4m16 0v10l-8 4m0-14L4 17m8 4V11"/>
         </svg>
       </div>
-      <h1 class="text-3xl font-bold text-white tracking-tight">Nexa<span class="text-cyan-400">Track</span></h1>
-      <p class="text-slate-400 mt-1 text-sm">Logistics Management Platform</p>
+      <h1 class="text-3xl font-black tracking-tight text-slate-900">Nexa<span class="text-[#1B5E3F]">Track</span></h1>
+      <p class="text-slate-500 mt-1 text-sm">Logistics Management Platform</p>
     </div>
 
-    <!-- Card -->
-    <div class="glass rounded-2xl shadow-2xl p-8 glow">
-      <h2 class="text-xl font-semibold text-white mb-6">Sign in to your account</h2>
+    <div class="panel rounded-[28px] p-8">
+      <h2 class="text-xl font-bold text-slate-900 mb-6">Sign in to your account</h2>
 
       {% with messages = get_flashed_messages() %}
         {% if messages %}
-          <div class="mb-5 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+          <div class="mb-5 p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
             {{ messages[0] }}
           </div>
         {% endif %}
@@ -56,33 +67,32 @@
 
       <form method="POST" action="/login" class="space-y-5">
         <div>
-          <label class="block text-sm font-medium text-slate-300 mb-1.5">Username</label>
+          <label class="block text-sm font-medium text-slate-600 mb-1.5">Username</label>
           <input name="username" type="text" required autocomplete="username"
-            class="glass-input w-full px-4 py-2.5 rounded-lg text-sm transition"
+            class="input-shell w-full px-4 py-2.5 rounded-xl text-sm transition"
             placeholder="Enter your username"/>
         </div>
         <div>
-          <label class="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
+          <label class="block text-sm font-medium text-slate-600 mb-1.5">Password</label>
           <input name="password" type="password" required autocomplete="current-password"
-            class="glass-input w-full px-4 py-2.5 rounded-lg text-sm transition"
+            class="input-shell w-full px-4 py-2.5 rounded-xl text-sm transition"
             placeholder="Enter your password"/>
         </div>
         <button type="submit"
-          class="w-full py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold rounded-lg transition text-sm glow-btn">
+          class="w-full py-2.75 bg-gradient-to-r from-[#1B5E3F] to-[#0D3B66] hover:from-[#164d35] hover:to-[#0b2f53] text-white font-semibold rounded-xl transition text-sm shadow-[0_16px_30px_rgba(27,94,63,0.22)]">
           Sign In →
         </button>
       </form>
 
-      <div class="mt-5 pt-5 border-t border-white/5 text-center">
-        <p class="text-slate-400 text-xs">
+      <div class="mt-5 pt-5 border-t border-slate-200 text-center">
+        <p class="text-slate-500 text-xs">
           Don't have an account?
-          <a href="/track" class="text-blue-400 hover:text-blue-300 transition">Track without login →</a>
+          <a href="/track" class="text-[#1B5E3F] hover:text-[#164d35] transition font-semibold">Track without login →</a>
         </p>
       </div>
     </div>
 
-    <p class="text-center text-slate-600 text-xs mt-6">© 2026 NexaTrackers. All rights reserved.</p>
+    <p class="text-center text-slate-500 text-xs mt-6">© 2026 NexaTrackers. All rights reserved.</p>
   </div>
-
 </body>
 </html>

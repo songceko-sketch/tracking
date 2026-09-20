@@ -97,22 +97,33 @@ def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXT
 
 
-def ensure_shipment_columns():
+def get_table_columns(table_name):
     conn = get_db()
     cur = conn.cursor()
+    try:
+        db_url = os.environ.get("DATABASE_URL", "")
+        if db_url:
+            cur.execute("""
+                SELECT column_name
+                FROM information_schema.columns
+                WHERE table_name = %s
+                ORDER BY ordinal_position
+            """, (table_name,))
+            return [row[0] for row in cur.fetchall()]
+        cur.execute(f"PRAGMA table_info({table_name})")
+        return [row[1] for row in cur.fetchall()]
+    except Exception:
+        return []
+    finally:
+        conn.close()
+
+
+def ensure_shipment_columns():
+    columns = get_table_columns("shipments")
+    if not columns:
+        return
+
     db_url = os.environ.get("DATABASE_URL", "")
-
-    columns = []
-    if db_url:
-        cur.execute("""
-            SELECT column_name
-            FROM information_schema.columns
-            WHERE table_name = 'shipments'
-        """)
-        columns = [row[0] for row in cur.fetchall()]
-    else:
-        columns = [row[1] for row in cur.execute("PRAGMA table_info(shipments)").fetchall()]
-
     required = [
         ("sender_name", "TEXT DEFAULT ''"),
         ("sender_email", "TEXT DEFAULT ''"),
@@ -145,14 +156,37 @@ def ensure_shipment_columns():
         ("comments", "TEXT DEFAULT ''"),
     ]
 
-    for col_name, col_type in required:
-        if col_name not in columns:
-            if db_url:
+    conn = get_db()
+    cur = conn.cursor()
+    try:
+        for col_name, col_type in required:
+            if col_name not in columns:
                 cur.execute(f"ALTER TABLE shipments ADD COLUMN {col_name} {col_type}")
-            else:
-                cur.execute(f"ALTER TABLE shipments ADD COLUMN {col_name} {col_type}")
-    conn.commit()
-    conn.close()
+        conn.commit()
+    except Exception:
+        pass
+    finally:
+        conn.close()
+
+
+def insert_shipment_record(payload):
+    columns = get_table_columns("shipments")
+    if not columns:
+        raise RuntimeError("shipments table not available")
+
+    valid_data = {key: value for key, value in payload.items() if key in columns and value is not None}
+    if not valid_data:
+        raise RuntimeError("no valid shipment fields to insert")
+
+    ordered_columns = [col for col in columns if col in valid_data]
+    if not ordered_columns:
+        raise RuntimeError("shipment payload does not match table columns")
+
+    placeholders = ", ".join(["?"] * len(ordered_columns))
+    sql = f"INSERT INTO shipments ({', '.join(ordered_columns)}) VALUES ({placeholders})"
+    values = [valid_data[col] for col in ordered_columns]
+    query(sql, values, commit=True)
+    return True
 
 
 # ── DB init (runs on every cold start, safe due to IF NOT EXISTS) ─────────────
@@ -517,32 +551,55 @@ def create_shipment():
             print(f"[CLOUDINARY ERROR] {e}")
             image_filename = ""
 
-    query(
-        """INSERT INTO shipments
-           (tracking_number, client_id, current_status, destination_address,
-            sender_name, sender_email, sender_contact, sender_country, sender_freight_type,
-            sender_date, sender_time, sender_address, sender_pickup_date, sender_pickup_time,
-            receiver_name, receiver_email, receiver_contact, receiver_country, receiver_freight_type,
-            receiver_date, receiver_time, receiver_address,
-            shipment_description, current_location, origin, destination,
-            departure_date, departure_time, arrival_date, arrival_time,
-            expected_delivery_date, expected_delivery_time, comments,
-            weight_kg, height_cm, width_cm, length_cm,
-            description, package_type, image_filename)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-        (tracking_number, client_id, current_status, destination_address,
-         sender_name, sender_email, sender_contact, sender_country, sender_freight_type,
-         sender_date, sender_time, sender_address, sender_pickup_date, sender_pickup_time,
-         receiver_name, receiver_email, receiver_contact, receiver_country, receiver_freight_type,
-         receiver_date, receiver_time, receiver_address,
-         description, current_location, origin, destination,
-         departure_date, departure_time, arrival_date, arrival_time,
-         expected_delivery_date, expected_delivery_time, comments,
-         weight_kg, height_cm, width_cm, length_cm,
-         description, package_type, image_filename),
-        commit=True
-    )
-    flash(f"Shipment {tracking_number} created and assigned.")
+    payload = {
+        "tracking_number": tracking_number,
+        "client_id": client_id,
+        "current_status": current_status,
+        "destination_address": destination_address,
+        "sender_name": sender_name,
+        "sender_email": sender_email,
+        "sender_contact": sender_contact,
+        "sender_country": sender_country,
+        "sender_freight_type": sender_freight_type,
+        "sender_date": sender_date,
+        "sender_time": sender_time,
+        "sender_address": sender_address,
+        "sender_pickup_date": sender_pickup_date,
+        "sender_pickup_time": sender_pickup_time,
+        "receiver_name": receiver_name,
+        "receiver_email": receiver_email,
+        "receiver_contact": receiver_contact,
+        "receiver_country": receiver_country,
+        "receiver_freight_type": receiver_freight_type,
+        "receiver_date": receiver_date,
+        "receiver_time": receiver_time,
+        "receiver_address": receiver_address,
+        "shipment_description": description,
+        "current_location": current_location,
+        "origin": origin,
+        "destination": destination,
+        "departure_date": departure_date,
+        "departure_time": departure_time,
+        "arrival_date": arrival_date,
+        "arrival_time": arrival_time,
+        "expected_delivery_date": expected_delivery_date,
+        "expected_delivery_time": expected_delivery_time,
+        "comments": comments,
+        "weight_kg": weight_kg,
+        "height_cm": height_cm,
+        "width_cm": width_cm,
+        "length_cm": length_cm,
+        "description": description,
+        "package_type": package_type,
+        "image_filename": image_filename,
+    }
+
+    try:
+        insert_shipment_record(payload)
+        flash(f"Shipment {tracking_number} created and assigned.")
+    except Exception as exc:
+        print(f"[CREATE_SHIPMENT_ERROR] {exc}")
+        flash("Shipment creation failed. Please check the shipping data and try again.")
     return redirect(url_for("admin_dashboard"))
 
 @app.route("/admin/update_location", methods=["POST"])
