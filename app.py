@@ -633,6 +633,23 @@ def create_shipment():
         flash(f"Shipment creation failed: {exc}")
     return redirect(url_for("admin_dashboard"))
 
+@app.route("/admin/delete_shipment/<int:shipment_id>", methods=["POST"])
+@login_required(role="admin")
+def delete_shipment(shipment_id):
+    shipment = query(
+        "SELECT tracking_number FROM shipments WHERE id = ?",
+        (shipment_id,), one=True
+    )
+    if not shipment:
+        flash("Shipment not found.")
+        return redirect(url_for("admin_dashboard"))
+
+    query("DELETE FROM shipment_history WHERE shipment_id = ?", (shipment_id,), commit=True)
+    query("DELETE FROM shipments WHERE id = ?", (shipment_id,), commit=True)
+    flash(f"Shipment {shipment['tracking_number']} deleted.")
+    return redirect(url_for("admin_dashboard"))
+
+
 @app.route("/admin/update_location", methods=["POST"])
 @login_required(role="admin")
 def update_location():

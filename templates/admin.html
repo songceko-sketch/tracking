@@ -293,6 +293,13 @@
                       <p class="text-xs text-slate-500">{{ s.username }}</p>
                       {% if s.destination_address %}<p class="mt-1 truncate text-xs text-emerald-600">🏁 {{ s.destination_address }}</p>{% endif %}
                     </div>
+                    <form method="POST" action="{{ url_for('delete_shipment', shipment_id=s.id) }}"
+                          onsubmit="return confirm('Delete shipment {{ s.tracking_number }}?');">
+                      <button type="submit"
+                        class="rounded-lg border border-red-200 bg-red-50 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-red-700 transition hover:bg-red-100">
+                        Delete
+                      </button>
+                    </form>
                   </div>
                 </li>
               {% endfor %}
