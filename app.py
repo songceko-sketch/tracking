@@ -119,8 +119,8 @@ def _first_form_float(form_data, *field_names, default=0):
 
 def get_table_columns(table_name):
     conn = get_db()
-    cur = conn.cursor()
     try:
+        cur = conn.cursor()
         db_url = os.environ.get("DATABASE_URL", "")
         if db_url:
             cur.execute("""
@@ -129,11 +129,9 @@ def get_table_columns(table_name):
                 WHERE table_name = %s
                 ORDER BY ordinal_position
             """, (table_name,))
-            return [row[0] for row in cur.fetchall()]
+            return [row["column_name"] for row in cur.fetchall()]
         cur.execute(f"PRAGMA table_info({table_name})")
         return [row[1] for row in cur.fetchall()]
-    except Exception:
-        return []
     finally:
         conn.close()
 
@@ -141,13 +139,10 @@ def get_table_columns(table_name):
 def ensure_shipment_columns():
     columns = get_table_columns("shipments")
     if not columns:
-        try:
-            init_db()
-            columns = get_table_columns("shipments")
-        except Exception:
-            columns = get_table_columns("shipments")
+        init_db()
+        columns = get_table_columns("shipments")
     if not columns:
-        return
+        raise RuntimeError("shipments table was not created in the configured database")
 
     db_url = os.environ.get("DATABASE_URL", "")
     required = [
@@ -189,8 +184,6 @@ def ensure_shipment_columns():
             if col_name not in columns:
                 cur.execute(f"ALTER TABLE shipments ADD COLUMN {col_name} {col_type}")
         conn.commit()
-    except Exception:
-        pass
     finally:
         conn.close()
 
@@ -198,14 +191,11 @@ def ensure_shipment_columns():
 def insert_shipment_record(payload):
     columns = get_table_columns("shipments")
     if not columns:
-        try:
-            init_db()
-            ensure_shipment_columns()
-            columns = get_table_columns("shipments")
-        except Exception:
-            columns = get_table_columns("shipments")
+        init_db()
+        ensure_shipment_columns()
+        columns = get_table_columns("shipments")
     if not columns:
-        raise RuntimeError("shipments table not available")
+        raise RuntimeError("shipments table is missing from the configured database")
 
     valid_data = {key: value for key, value in payload.items() if key in columns and value is not None}
     if not valid_data:
