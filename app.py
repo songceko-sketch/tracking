@@ -97,6 +97,26 @@ def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXT
 
 
+def _first_form_value(form_data, *field_names):
+    for field_name in field_names:
+        values = form_data.getlist(field_name)
+        for value in values:
+            clean = (value or "").strip()
+            if clean:
+                return clean
+    return ""
+
+
+def _first_form_float(form_data, *field_names, default=0):
+    value = _first_form_value(form_data, *field_names)
+    if not value:
+        return default
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
 def get_table_columns(table_name):
     conn = get_db()
     cur = conn.cursor()
@@ -498,46 +518,55 @@ def create_client():
 @app.route("/admin/create_shipment", methods=["POST"])
 @login_required(role="admin")
 def create_shipment():
-    client_id = request.form["client_id"]
-    destination_address = request.form.get("destination", "").strip() or request.form.get("receiver_address", "").strip() or request.form.get("destination_address", "").strip()
-    description = request.form.get("shipment_description", "").strip() or request.form.get("description", "").strip()
-    package_type = request.form.get("package_type", "").strip()
-    weight_kg = request.form.get("weight_kg", 0) or 0
-    height_cm = request.form.get("height_cm", 0) or 0
-    width_cm = request.form.get("width_cm", 0) or 0
-    length_cm = request.form.get("length_cm", 0) or 0
+    client_id_raw = _first_form_value(request.form, "client_id")
+    if not client_id_raw:
+        flash("Please select a valid client before creating a shipment.")
+        return redirect(url_for("admin_dashboard"))
+    try:
+        client_id = int(client_id_raw)
+    except (TypeError, ValueError):
+        flash("The selected client is invalid. Please choose a client from the list.")
+        return redirect(url_for("admin_dashboard"))
 
-    sender_name = request.form.get("sender_name", "").strip()
-    sender_email = request.form.get("sender_email", "").strip()
-    sender_contact = request.form.get("sender_contact", "").strip()
-    sender_country = request.form.get("sender_country", "").strip() or request.form.get("origin", "").strip()
-    sender_freight_type = request.form.get("sender_freight_type", "").strip()
-    sender_date = request.form.get("sender_date", "").strip() or request.form.get("departure_date", "").strip()
-    sender_time = request.form.get("sender_time", "").strip() or request.form.get("departure_time", "").strip()
-    sender_address = request.form.get("sender_address", "").strip() or request.form.get("current_location", "").strip()
-    sender_pickup_date = request.form.get("sender_pickup_date", "").strip()
-    sender_pickup_time = request.form.get("sender_pickup_time", "").strip()
+    destination_address = _first_form_value(request.form, "destination", "receiver_address", "destination_address")
+    description = _first_form_value(request.form, "shipment_description", "description")
+    package_type = _first_form_value(request.form, "package_type")
+    weight_kg = _first_form_float(request.form, "weight_kg", default=0)
+    height_cm = _first_form_float(request.form, "height_cm", default=0)
+    width_cm = _first_form_float(request.form, "width_cm", default=0)
+    length_cm = _first_form_float(request.form, "length_cm", default=0)
 
-    receiver_name = request.form.get("receiver_name", "").strip()
-    receiver_email = request.form.get("receiver_email", "").strip()
-    receiver_contact = request.form.get("receiver_contact", "").strip()
-    receiver_country = request.form.get("receiver_country", "").strip() or request.form.get("destination", "").strip()
-    receiver_freight_type = request.form.get("receiver_freight_type", "").strip()
-    receiver_date = request.form.get("receiver_date", "").strip() or request.form.get("arrival_date", "").strip() or request.form.get("expected_delivery_date", "").strip()
-    receiver_time = request.form.get("receiver_time", "").strip() or request.form.get("arrival_time", "").strip() or request.form.get("expected_delivery_time", "").strip()
-    receiver_address = request.form.get("receiver_address", "").strip() or request.form.get("destination", "").strip()
+    sender_name = _first_form_value(request.form, "sender_name")
+    sender_email = _first_form_value(request.form, "sender_email")
+    sender_contact = _first_form_value(request.form, "sender_contact")
+    sender_country = _first_form_value(request.form, "sender_country", "origin")
+    sender_freight_type = _first_form_value(request.form, "sender_freight_type")
+    sender_date = _first_form_value(request.form, "sender_date", "departure_date")
+    sender_time = _first_form_value(request.form, "sender_time", "departure_time")
+    sender_address = _first_form_value(request.form, "sender_address", "current_location")
+    sender_pickup_date = _first_form_value(request.form, "sender_pickup_date")
+    sender_pickup_time = _first_form_value(request.form, "sender_pickup_time")
 
-    current_status = request.form.get("status", "").strip() or "Registered & Pending"
-    current_location = request.form.get("current_location", "").strip() or sender_address
-    origin = request.form.get("origin", "").strip() or sender_country
-    destination = request.form.get("destination", "").strip() or receiver_address or receiver_country
-    departure_date = request.form.get("departure_date", "").strip()
-    departure_time = request.form.get("departure_time", "").strip()
-    arrival_date = request.form.get("arrival_date", "").strip()
-    arrival_time = request.form.get("arrival_time", "").strip()
-    expected_delivery_date = request.form.get("expected_delivery_date", "").strip()
-    expected_delivery_time = request.form.get("expected_delivery_time", "").strip()
-    comments = request.form.get("comments", "").strip()
+    receiver_name = _first_form_value(request.form, "receiver_name")
+    receiver_email = _first_form_value(request.form, "receiver_email")
+    receiver_contact = _first_form_value(request.form, "receiver_contact")
+    receiver_country = _first_form_value(request.form, "receiver_country", "destination")
+    receiver_freight_type = _first_form_value(request.form, "receiver_freight_type")
+    receiver_date = _first_form_value(request.form, "receiver_date", "arrival_date", "expected_delivery_date")
+    receiver_time = _first_form_value(request.form, "receiver_time", "arrival_time", "expected_delivery_time")
+    receiver_address = _first_form_value(request.form, "receiver_address", "destination")
+
+    current_status = _first_form_value(request.form, "status") or "Registered & Pending"
+    current_location = _first_form_value(request.form, "current_location") or sender_address
+    origin = _first_form_value(request.form, "origin") or sender_country
+    destination = _first_form_value(request.form, "destination") or receiver_address or receiver_country
+    departure_date = _first_form_value(request.form, "departure_date")
+    departure_time = _first_form_value(request.form, "departure_time")
+    arrival_date = _first_form_value(request.form, "arrival_date")
+    arrival_time = _first_form_value(request.form, "arrival_time")
+    expected_delivery_date = _first_form_value(request.form, "expected_delivery_date")
+    expected_delivery_time = _first_form_value(request.form, "expected_delivery_time")
+    comments = _first_form_value(request.form, "comments")
 
     tracking_number = "TRK-" + uuid.uuid4().hex[:8].upper()
 
@@ -598,8 +627,10 @@ def create_shipment():
         insert_shipment_record(payload)
         flash(f"Shipment {tracking_number} created and assigned.")
     except Exception as exc:
+        import traceback
+        traceback.print_exc()
         print(f"[CREATE_SHIPMENT_ERROR] {exc}")
-        flash("Shipment creation failed. Please check the shipping data and try again.")
+        flash(f"Shipment creation failed: {exc}")
     return redirect(url_for("admin_dashboard"))
 
 @app.route("/admin/update_location", methods=["POST"])
