@@ -1,0 +1,62 @@
+.location-autocomplete {
+  position: relative;
+}
+
+.location-suggestions {
+  position: absolute;
+  z-index: 60;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 12px 28px rgb(15 23 42 / 16%);
+}
+
+.location-suggestions[hidden] {
+  display: none;
+}
+
+.location-suggestion {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  background: #fff;
+  color: #1e293b;
+  text-align: left;
+  cursor: pointer;
+}
+
+.location-suggestion + .location-suggestion {
+  border-top: 1px solid #e2e8f0;
+}
+
+.location-suggestion:hover,
+.location-suggestion[aria-selected="true"] {
+  background: #eff6ff;
+}
+
+.location-suggestion-name {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.location-suggestion-detail {
+  display: block;
+  margin-top: 2px;
+  color: #64748b;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.location-suggestion-message {
+  padding: 10px 12px;
+  color: #64748b;
+  font-size: 12px;
+}

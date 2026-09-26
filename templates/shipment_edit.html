@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Edit {{ shipment['tracking_number'] }} - NexaTrackers Admin</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/location-autocomplete.css') }}"/>
 </head>
 <body class="min-h-screen bg-slate-100 text-slate-800">
   <nav class="border-b border-slate-200 bg-slate-900 px-4 py-4 text-white">
@@ -39,16 +40,16 @@
             <input name="current_status" value="{{ shipment['current_status'] or '' }}" required class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
           </label>
           <label class="block text-sm font-medium">Current location
-            <input name="current_location" value="{{ shipment['current_location'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
+            <input name="current_location" data-location-autocomplete value="{{ shipment['current_location'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
           </label>
           <label class="block text-sm font-medium">Origin
-            <input name="origin" value="{{ shipment['origin'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
+            <input name="origin" data-location-autocomplete value="{{ shipment['origin'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
           </label>
           <label class="block text-sm font-medium">Destination
-            <input name="destination" value="{{ shipment['destination'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
+            <input name="destination" data-location-autocomplete value="{{ shipment['destination'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
           </label>
           <label class="block text-sm font-medium md:col-span-2">Destination address
-            <input name="destination_address" value="{{ shipment['destination_address'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
+            <input name="destination_address" data-location-autocomplete value="{{ shipment['destination_address'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
           </label>
         </div>
       </section>
@@ -66,13 +67,13 @@
             <input name="sender_contact" value="{{ shipment['sender_contact'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
           </label>
           <label class="block text-sm font-medium">Country
-            <input name="sender_country" value="{{ shipment['sender_country'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+            <input name="sender_country" data-location-autocomplete value="{{ shipment['sender_country'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
           </label>
           <label class="block text-sm font-medium">Freight type
             <input name="sender_freight_type" value="{{ shipment['sender_freight_type'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
           </label>
           <label class="block text-sm font-medium">Address
-            <input name="sender_address" value="{{ shipment['sender_address'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+            <input name="sender_address" data-location-autocomplete value="{{ shipment['sender_address'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
           </label>
         </div>
       </section>
@@ -90,13 +91,13 @@
             <input name="receiver_contact" value="{{ shipment['receiver_contact'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
           </label>
           <label class="block text-sm font-medium">Country
-            <input name="receiver_country" value="{{ shipment['receiver_country'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+            <input name="receiver_country" data-location-autocomplete value="{{ shipment['receiver_country'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
           </label>
           <label class="block text-sm font-medium">Freight type
             <input name="receiver_freight_type" value="{{ shipment['receiver_freight_type'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
           </label>
           <label class="block text-sm font-medium">Address
-            <input name="receiver_address" value="{{ shipment['receiver_address'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+            <input name="receiver_address" data-location-autocomplete value="{{ shipment['receiver_address'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
           </label>
         </div>
       </section>
@@ -155,5 +156,6 @@
       </div>
     </form>
   </main>
+  <script src="{{ url_for('static', filename='js/location-autocomplete.js') }}"></script>
 </body>
 </html>

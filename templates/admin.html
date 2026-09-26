@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Dashboard – NexaTrackers</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/location-autocomplete.css') }}"/>
 </head>
 <body class="min-h-screen bg-[radial-gradient(circle_at_top,_#f8fafc_0%,_#eef6ff_35%,_#edf7f3_100%)] text-slate-800">
 
@@ -141,12 +142,12 @@
             </div>
             <div>
               <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Origin</label>
-              <input name="sender_country" type="text" required placeholder="Memphis, United States"
+              <input name="sender_country" type="text" required data-location-autocomplete placeholder="Memphis, United States"
                 class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"/>
             </div>
             <div class="md:col-span-2">
               <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Address</label>
-              <textarea name="sender_address" rows="2" required placeholder="Memphis, TN, USA"
+              <textarea name="sender_address" rows="2" required data-location-autocomplete placeholder="Memphis, TN, USA"
                 class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100 resize-none"></textarea>
             </div>
           </div>
@@ -173,12 +174,12 @@
             </div>
             <div>
               <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Destination</label>
-              <input name="destination" type="text" required placeholder="Brookhaven, United States"
+              <input name="destination" type="text" required data-location-autocomplete placeholder="Brookhaven, United States"
                 class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
             </div>
             <div class="md:col-span-2">
               <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Address</label>
-              <textarea name="receiver_address" rows="2" required placeholder="3001 Old Malcum Rd NE, Brookhaven, MS 39601, USA"
+              <textarea name="receiver_address" rows="2" required data-location-autocomplete placeholder="3001 Old Malcum Rd NE, Brookhaven, MS 39601, USA"
                 class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100 resize-none"></textarea>
             </div>
           </div>
@@ -200,7 +201,7 @@
             </div>
             <div>
               <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Current Location</label>
-              <input name="current_location" type="text" required placeholder="Memphis, TN, USA"
+              <input name="current_location" type="text" required data-location-autocomplete placeholder="Memphis, TN, USA"
                 class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"/>
             </div>
           </div>
@@ -332,7 +333,7 @@
           </div>
           <div>
             <label class="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">City Name</label>
-            <input name="city_name" type="text" required placeholder="e.g. Paris, New York, Tokyo"
+            <input name="city_name" type="text" required data-location-autocomplete placeholder="e.g. Paris, New York, Tokyo"
               class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"/>
           </div>
           <div>
@@ -384,6 +385,7 @@
       });
     }
   </script>
+  <script src="{{ url_for('static', filename='js/location-autocomplete.js') }}"></script>
 
 </body>
 </html>

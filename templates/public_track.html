@@ -439,6 +439,8 @@
     const history = {{ history | tojson }};
     const originAddr = {{ (result['origin'] or result['sender_address'] or result['sender_country']) | tojson }};
     const destinationAddr = {{ (result['destination_address'] or result['destination'] or result['receiver_address']) | tojson }};
+    const originCountry = {{ (result['sender_country'] or '') | tojson }};
+    const destinationCountry = {{ (result['receiver_country'] or '') | tojson }};
     const statusEl = document.getElementById('map-status');
     function showMapStatus(message, isError = false) {
       statusEl.textContent = message;
@@ -510,6 +512,29 @@
       return request;
     }
 
+    function addressCandidates(address, countryHint) {
+      const cleanAddress = (address || '').trim();
+      const parts = cleanAddress.split(',').map(part => part.trim()).filter(Boolean);
+      const candidates = [cleanAddress];
+      if (parts.length >= 3) candidates.push(parts.slice(-3).join(', '));
+      if (parts.length >= 2) candidates.push(parts.slice(-2).join(', '));
+      if (countryHint && parts.length >= 3) {
+        candidates.push(`${parts.slice(-3, -1).join(', ')}, ${countryHint}`);
+      }
+      if (countryHint && parts.length >= 2) {
+        candidates.push(`${parts[parts.length - 2]}, ${countryHint}`);
+      }
+      return [...new Set(candidates.filter(Boolean))];
+    }
+
+    async function geocodeAddress(address, countryHint) {
+      for (const candidate of addressCandidates(address, countryHint)) {
+        const point = await geocode(candidate);
+        if (point) return point;
+      }
+      return null;
+    }
+
     function escapeHtml(value) {
       return String(value).replace(/[&<>"']/g, character => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
@@ -526,7 +551,7 @@
       try {
         const latest = history && history.length ? history[history.length - 1] : null;
         const [origin, destination, current] = await Promise.all([
-          geocode(originAddr), geocode(destinationAddr),
+          geocodeAddress(originAddr, originCountry), geocodeAddress(destinationAddr, destinationCountry),
           latest ? geocode(latest.city_name) : Promise.resolve(null)
         ]);
         if (!origin || !destination) {
