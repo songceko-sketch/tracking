@@ -528,6 +528,39 @@ def create_client():
     flash(f"Client '{username}' created successfully.")
     return redirect(url_for("admin_dashboard"))
 
+
+@app.route("/admin/delete_client/<int:client_id>", methods=["POST"])
+@login_required(role="admin")
+def delete_client(client_id):
+    client = query(
+        "SELECT id, username FROM users WHERE id = ? AND role = 'client'",
+        (client_id,),
+        one=True
+    )
+    if not client:
+        flash("Client not found.")
+        return redirect(url_for("admin_dashboard"))
+
+    shipment_ids = [
+        row["id"] for row in query(
+            "SELECT id FROM shipments WHERE client_id = ?",
+            (client_id,)
+        )
+    ]
+
+    for shipment_id in shipment_ids:
+        query(
+            "DELETE FROM shipment_history WHERE shipment_id = ?",
+            (shipment_id,),
+            commit=True
+        )
+
+    query("DELETE FROM shipments WHERE client_id = ?", (client_id,), commit=True)
+    query("DELETE FROM users WHERE id = ? AND role = 'client'", (client_id,), commit=True)
+
+    flash(f"Client '{client['username']}' deleted successfully.")
+    return redirect(url_for("admin_dashboard"))
+
 @app.route("/admin/create_shipment", methods=["POST"])
 @login_required(role="admin")
 def create_shipment():

@@ -83,7 +83,14 @@
                     <p class="text-sm font-semibold text-slate-800">{{ c.username }}</p>
                     <p class="text-xs text-slate-500">{{ c.email }}</p>
                   </div>
-                  <span class="rounded-full bg-emerald-100 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-emerald-700">ID {{ c.id }}</span>
+                  <div class="flex items-center gap-2">
+                    <span class="rounded-full bg-emerald-100 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-emerald-700">ID {{ c.id }}</span>
+                      <form method="POST" action="/admin/delete_client/{{ c.id }}" onsubmit="return confirm('Delete client {{ c.username }} and all of their shipments?');">
+                      <button type="submit" class="rounded-lg border border-red-200 bg-red-50 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-red-700 transition hover:bg-red-100">
+                        Delete
+                      </button>
+                    </form>
+                  </div>
                 </li>
               {% endfor %}
             </ul>
