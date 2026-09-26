@@ -141,6 +141,12 @@ def get_table_columns(table_name):
 def ensure_shipment_columns():
     columns = get_table_columns("shipments")
     if not columns:
+        try:
+            init_db()
+            columns = get_table_columns("shipments")
+        except Exception:
+            columns = get_table_columns("shipments")
+    if not columns:
         return
 
     db_url = os.environ.get("DATABASE_URL", "")
