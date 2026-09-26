@@ -192,6 +192,13 @@ def ensure_shipment_columns():
 def insert_shipment_record(payload):
     columns = get_table_columns("shipments")
     if not columns:
+        try:
+            init_db()
+            ensure_shipment_columns()
+            columns = get_table_columns("shipments")
+        except Exception:
+            columns = get_table_columns("shipments")
+    if not columns:
         raise RuntimeError("shipments table not available")
 
     valid_data = {key: value for key, value in payload.items() if key in columns and value is not None}
