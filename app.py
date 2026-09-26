@@ -4,6 +4,7 @@ PostgreSQL version for Vercel deployment
 """
 import os
 import uuid
+import math
 import smtplib
 import threading
 from email.mime.multipart import MIMEMultipart
@@ -684,6 +685,87 @@ def delete_shipment(shipment_id):
     query("DELETE FROM shipments WHERE id = ?", (shipment_id,), commit=True)
     flash(f"Shipment {shipment['tracking_number']} deleted.")
     return redirect(url_for("admin_dashboard"))
+
+
+@app.route("/admin/edit_shipment/<int:shipment_id>", methods=["GET", "POST"])
+@login_required(role="admin")
+def edit_shipment(shipment_id):
+    shipment = query("SELECT * FROM shipments WHERE id = ?", (shipment_id,), one=True)
+    if not shipment:
+        flash("Shipment not found.")
+        return redirect(url_for("admin_dashboard"))
+
+    editable_text_fields = (
+        "current_status", "current_location", "origin", "destination",
+        "destination_address", "sender_name", "sender_email", "sender_contact",
+        "sender_country", "sender_freight_type", "sender_date", "sender_time",
+        "sender_address", "sender_pickup_date", "sender_pickup_time",
+        "receiver_name", "receiver_email", "receiver_contact", "receiver_country",
+        "receiver_freight_type", "receiver_date", "receiver_time", "receiver_address",
+        "shipment_description", "description", "package_type", "departure_date",
+        "departure_time", "arrival_date", "arrival_time", "expected_delivery_date",
+        "expected_delivery_time", "comments",
+    )
+    editable_numeric_fields = ("weight_kg", "height_cm", "width_cm", "length_cm")
+
+    if request.method == "POST":
+        available_columns = set(get_table_columns("shipments"))
+        updates = {
+            field: request.form.get(field, "").strip()
+            for field in editable_text_fields
+            if field in available_columns
+        }
+        if "current_status" in updates and not updates["current_status"]:
+            flash("Shipment status cannot be empty.")
+            return redirect(url_for("edit_shipment", shipment_id=shipment_id))
+        try:
+            for field in editable_numeric_fields:
+                if field in available_columns:
+                    raw_value = request.form.get(field, "").strip()
+                    numeric_value = float(raw_value) if raw_value else 0
+                    if not math.isfinite(numeric_value) or numeric_value < 0:
+                        raise ValueError
+                    updates[field] = numeric_value
+        except ValueError:
+            flash("Weight and dimensions must be valid numbers.")
+            return redirect(url_for("edit_shipment", shipment_id=shipment_id))
+
+        if not updates:
+            flash("No editable shipment fields are available in the database.")
+            return redirect(url_for("edit_shipment", shipment_id=shipment_id))
+
+        location_changed = updates.get("current_location", shipment.get("current_location", "")) != (shipment.get("current_location") or "")
+        status_changed = updates.get("current_status", shipment.get("current_status", "")) != (shipment.get("current_status") or "")
+        update_columns = list(updates)
+        assignments = ", ".join(f"{column} = ?" for column in update_columns)
+        query(
+            f"UPDATE shipments SET {assignments} WHERE id = ?",
+            [updates[column] for column in update_columns] + [shipment_id],
+            commit=True,
+        )
+
+        if location_changed or status_changed:
+            current_location = updates.get("current_location") or shipment.get("current_location") or updates.get("origin") or "Shipment update"
+            current_status = updates.get("current_status") or shipment.get("current_status") or "Shipment updated"
+            query(
+                "INSERT INTO shipment_history (shipment_id, city_name, status_notes) VALUES (?, ?, ?)",
+                (shipment_id, current_location, current_status),
+                commit=True,
+            )
+            recipient = query("""
+                SELECT u.email, u.username, s.tracking_number
+                FROM shipments s JOIN users u ON s.client_id = u.id WHERE s.id = ?
+            """, (shipment_id,), one=True)
+            if recipient:
+                _send_update_email(
+                    recipient["email"], recipient["username"], recipient["tracking_number"],
+                    current_location, current_status
+                )
+
+        flash(f"Shipment {shipment['tracking_number']} updated successfully.")
+        return redirect(url_for("edit_shipment", shipment_id=shipment_id))
+
+    return render_template("shipment_edit.html", shipment=shipment)
 
 
 @app.route("/admin/update_location", methods=["POST"])

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit {{ shipment['tracking_number'] }} - NexaTrackers Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-100 text-slate-800">
+  <nav class="border-b border-slate-200 bg-slate-900 px-4 py-4 text-white">
+    <div class="mx-auto flex max-w-5xl items-center justify-between">
+      <a href="{{ url_for('admin_dashboard') }}" class="text-sm font-semibold text-slate-200 hover:text-white">&larr; Admin dashboard</a>
+      <span class="text-sm text-slate-300">{{ session.username }}</span>
+    </div>
+  </nav>
+
+  <main class="mx-auto max-w-5xl px-4 py-8">
+    <header class="mb-6 flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest text-slate-500">Edit shipment</p>
+        <h1 class="mt-1 font-mono text-2xl font-bold text-slate-900">{{ shipment['tracking_number'] }}</h1>
+      </div>
+      <span class="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-800">{{ shipment['current_status'] }}</span>
+    </header>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="mb-5 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-sm font-medium text-blue-800">
+          {% for message in messages %}<p>{{ message }}</p>{% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" class="space-y-6">
+      <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <h2 class="mb-4 text-base font-bold text-slate-900">Status and route</h2>
+        <div class="grid gap-4 md:grid-cols-2">
+          <label class="block text-sm font-medium">Current status
+            <input name="current_status" value="{{ shipment['current_status'] or '' }}" required class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
+          </label>
+          <label class="block text-sm font-medium">Current location
+            <input name="current_location" value="{{ shipment['current_location'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
+          </label>
+          <label class="block text-sm font-medium">Origin
+            <input name="origin" value="{{ shipment['origin'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
+          </label>
+          <label class="block text-sm font-medium">Destination
+            <input name="destination" value="{{ shipment['destination'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
+          </label>
+          <label class="block text-sm font-medium md:col-span-2">Destination address
+            <input name="destination_address" value="{{ shipment['destination_address'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"/>
+          </label>
+        </div>
+      </section>
+
+      <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <h2 class="mb-4 text-base font-bold text-slate-900">Sender</h2>
+        <div class="grid gap-4 md:grid-cols-2">
+          <label class="block text-sm font-medium">Name
+            <input name="sender_name" value="{{ shipment['sender_name'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Email
+            <input name="sender_email" type="email" value="{{ shipment['sender_email'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Phone
+            <input name="sender_contact" value="{{ shipment['sender_contact'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Country
+            <input name="sender_country" value="{{ shipment['sender_country'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Freight type
+            <input name="sender_freight_type" value="{{ shipment['sender_freight_type'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Address
+            <input name="sender_address" value="{{ shipment['sender_address'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+        </div>
+      </section>
+
+      <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <h2 class="mb-4 text-base font-bold text-slate-900">Receiver</h2>
+        <div class="grid gap-4 md:grid-cols-2">
+          <label class="block text-sm font-medium">Name
+            <input name="receiver_name" value="{{ shipment['receiver_name'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Email
+            <input name="receiver_email" type="email" value="{{ shipment['receiver_email'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Phone
+            <input name="receiver_contact" value="{{ shipment['receiver_contact'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Country
+            <input name="receiver_country" value="{{ shipment['receiver_country'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Freight type
+            <input name="receiver_freight_type" value="{{ shipment['receiver_freight_type'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Address
+            <input name="receiver_address" value="{{ shipment['receiver_address'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+        </div>
+      </section>
+
+      <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <h2 class="mb-4 text-base font-bold text-slate-900">Package and schedule</h2>
+        <div class="grid gap-4 md:grid-cols-2">
+          <label class="block text-sm font-medium md:col-span-2">Shipment description
+            <textarea name="shipment_description" rows="2" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal">{{ shipment['shipment_description'] or '' }}</textarea>
+          </label>
+          <label class="block text-sm font-medium">Package description
+            <input name="description" value="{{ shipment['description'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Package type
+            <input name="package_type" value="{{ shipment['package_type'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Weight (kg)
+            <input name="weight_kg" type="number" step="any" min="0" value="{{ shipment['weight_kg'] if shipment['weight_kg'] is not none else '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Length (cm)
+            <input name="length_cm" type="number" step="any" min="0" value="{{ shipment['length_cm'] if shipment['length_cm'] is not none else '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Width (cm)
+            <input name="width_cm" type="number" step="any" min="0" value="{{ shipment['width_cm'] if shipment['width_cm'] is not none else '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Height (cm)
+            <input name="height_cm" type="number" step="any" min="0" value="{{ shipment['height_cm'] if shipment['height_cm'] is not none else '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Departure date
+            <input name="departure_date" type="date" value="{{ shipment['departure_date'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Departure time
+            <input name="departure_time" type="time" value="{{ shipment['departure_time'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Arrival date
+            <input name="arrival_date" type="date" value="{{ shipment['arrival_date'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Arrival time
+            <input name="arrival_time" type="time" value="{{ shipment['arrival_time'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Expected delivery date
+            <input name="expected_delivery_date" type="date" value="{{ shipment['expected_delivery_date'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium">Expected delivery time
+            <input name="expected_delivery_time" type="time" value="{{ shipment['expected_delivery_time'] or '' }}" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal"/>
+          </label>
+          <label class="block text-sm font-medium md:col-span-2">Comments
+            <textarea name="comments" rows="3" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal">{{ shipment['comments'] or '' }}</textarea>
+          </label>
+        </div>
+      </section>
+
+      <div class="flex flex-wrap justify-end gap-3">
+        <a href="{{ url_for('admin_dashboard') }}" class="rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700">Cancel</a>
+        <button type="submit" class="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-800">Save shipment changes</button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>

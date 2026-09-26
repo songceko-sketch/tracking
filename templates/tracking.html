@@ -170,7 +170,7 @@
       statusEl.classList.remove('hidden');
     }
 
-    const originAddr = {{ (shipment['origin'] or shipment['sender_address']) | tojson }};
+    const originAddr = {{ (shipment['origin'] or shipment['sender_address'] or shipment['sender_country']) | tojson }};
     const destinationAddr = {{ (shipment['destination_address'] or shipment['destination'] or shipment['receiver_address']) | tojson }};
 
     if (!window.L) {
